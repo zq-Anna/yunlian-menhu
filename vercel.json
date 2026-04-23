@@ -1,0 +1,1 @@
+{"name":"yunlian-menhu","version":2,"builds":[{"src":"app-design.html","use":"@vercel/static"}],"routes":[{"src":"/(.*)","dest":"/app-design.html"}]}
