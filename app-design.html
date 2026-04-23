@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>企业移动办公平台</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; background: #f5f5f5; }
+
+  .phone-frame {
+    width: 100%;
+    height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #f5f5f5;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .app-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+  }
+
+  .tab-panel {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    background: #f5f5f5;
+  }
+  .tab-panel.active { display: flex; }
+  .tab-panel::-webkit-scrollbar { display: none; }
+
+  /* ===== 工作台 ===== */
+  .workbench-header {
+    background: linear-gradient(160deg, #D42B2B 0%, #c01f1f 100%);
+    padding: 12px 20px 14px;
+    flex-shrink: 0;
+  }
+  .wh-row1 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .wh-logo { display: flex; align-items: center; gap: 8px; }
+  .wh-logo-icon { width: 32px; height: 32px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .wh-logo-icon svg { width: 18px; height: 18px; fill: #D42B2B; }
+  .wh-logo-text { color: white; font-size: 15px; font-weight: 700; }
+  .wh-actions { display: flex; gap: 8px; }
+  .wh-act-btn { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .wh-act-btn svg { width: 16px; height: 16px; fill: white; }
+  .wh-greeting { color: white; font-size: 13px; margin-bottom: 10px; }
+  .wh-greeting strong { font-size: 15px; }
+  .wh-search { background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; padding: 8px 14px; gap: 6px; }
+  .wh-search svg { width: 14px; height: 14px; fill: rgba(255,255,255,0.7); }
+  .wh-search span { font-size: 12px; color: rgba(255,255,255,0.7); }
+
+  .todo-card {
+    margin: 10px 16px 0;
+    background: linear-gradient(135deg, #D42B2B 0%, #e85555 100%);
+    border-radius: 14px;
+    padding: 12px;
+    color: white;
+  }
+  .todo-card-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .todo-card-title svg { width: 14px; height: 14px; fill: white; }
+  .todo-stats { display: flex; gap: 6px; }
+  .todo-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+  .todo-stat-num { font-size: 20px; font-weight: 700; }
+  .todo-stat-label { font-size: 10px; opacity: 0.85; margin-top: 2px; }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px 8px;
+  }
+  .section-title { font-size: 14px; font-weight: 700; color: #222; }
+  .section-more { font-size: 11px; color: #999; display: flex; align-items: center; gap: 2px; }
+  .section-more svg { width: 12px; height: 12px; fill: #999; }
+
+  .quick-apps {
+    background: white;
+    margin: 0 16px;
+    border-radius: 14px;
+    padding: 12px 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .quick-app {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .quick-app-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .quick-app-icon svg { width: 20px; height: 20px; }
+  .quick-app-icon.red { background: linear-gradient(135deg, #D42B2B, #e85555); }
+  .quick-app-icon.red svg { fill: white; }
+  .quick-app-icon.blue { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+  .quick-app-icon.blue svg { fill: white; }
+  .quick-app-icon.green { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+  .quick-app-icon.green svg { fill: white; }
+  .quick-app-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
+  .quick-app-icon.orange svg { fill: white; }
+  .quick-app-icon.add-btn { background: #f5f5f5; border: 2px dashed #ddd; }
+  .quick-app-icon.add-btn svg { fill: #bbb; width: 18px; height: 18px; }
+  .quick-app-label { font-size: 10px; color: #555; text-align: center; line-height: 1.2; }
+
+  /* 应用列表 - 单列卡片，垂直滚动 */
+  .apps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 16px 16px;
+  }
+  .system-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  .system-card-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 10px;
+  }
+  .system-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #D42B2B, #e85555);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .system-icon svg { width: 20px; height: 20px; fill: white; }
+  .system-icon.blue { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+  .system-icon.green { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+  .system-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
+  .system-info { flex: 1; min-width: 0; }
+  .system-name { font-size: 14px; font-weight: 700; color: #222; }
+  .system-desc {
+    font-size: 11px;
+    color: #888;
+    margin-top: 3px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* 快捷功能入口 */
+  .system-shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 12px 10px;
+  }
+  .shortcut-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid;
+  }
+  .shortcut-tag svg { width: 12px; height: 12px; }
+  .shortcut-tag.red { background: #fff0f0; color: #D42B2B; border-color: #ffd0d0; }
+  .shortcut-tag.red svg { fill: #D42B2B; }
+  .shortcut-tag.blue { background: #e8f0fe; color: #1976d2; border-color: #c5d9fc; }
+  .shortcut-tag.blue svg { fill: #1976d2; }
+  .shortcut-tag.green { background: #e8f5e9; color: #388e3c; border-color: #c8e6c9; }
+  .shortcut-tag.green svg { fill: #388e3c; }
+  .shortcut-tag.orange { background: #fff3e0; color: #f57c00; border-color: #ffe0b2; }
+  .shortcut-tag.orange svg { fill: #f57c00; }
+  .system-card-footer {
+    padding: 0 12px 12px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .system-open-btn {
+    background: #fff0f0;
+    color: #D42B2B;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 16px;
+    border: 1px solid #ffd0d0;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  /* ===== 消息中心 ===== */
+  .msg-filter {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    overflow-x: auto;
+  }
+  .msg-filter::-webkit-scrollbar { display: none; }
+  .filter-chip {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    background: #f5f5f5;
+    color: #666;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .filter-chip.active { background: #fff0f0; color: #D42B2B; border-color: #ffd0d0; font-weight: 600; }
+  .msg-list { padding: 0; }
+  .msg-item {
+    background: white;
+    margin-bottom: 1px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+  }
+  .msg-item:active { background: #f9f9f9; }
+  .msg-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .msg-avatar.red { background: linear-gradient(135deg, #D42B2B, #e85555); }
+  .msg-avatar.blue { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+  .msg-avatar.green { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+  .msg-avatar.orange { background: linear-gradient(135deg, #f57c00, #ffb74d); }
+  .msg-avatar.purple { background: linear-gradient(135deg, #7b1fa2, #ba68c8); }
+  .msg-avatar svg { width: 24px; height: 24px; fill: white; }
+  .msg-content { flex: 1; min-width: 0; }
+  .msg-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .msg-sender { font-size: 14px; font-weight: 600; color: #222; }
+  .msg-meta { display: flex; align-items: center; gap: 6px; }
+  .msg-time { font-size: 11px; color: #bbb; white-space: nowrap; }
+  .msg-text { font-size: 13px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg-unread {
+    background: #D42B2B;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    flex-shrink: 0;
+  }
+  .msg-section-title {
+    padding: 10px 16px 6px;
+    font-size: 12px;
+    color: #bbb;
+    font-weight: 600;
+    background: #f5f5f5;
+    letter-spacing: 0.5px;
+  }
+  .notice-banner {
+    margin: 10px 16px;
+    background: #fff8e1;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 3px solid #ffc107;
+  }
+  .notice-banner svg { width: 16px; height: 16px; fill: #ffa000; flex-shrink: 0; }
+  .notice-banner span { font-size: 12px; color: #795548; }
+
+  /* ===== 通讯录 ===== */
+  .contacts-search-bar {
+    background: white;
+    margin: 10px 16px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+  .contacts-search-bar svg { width: 16px; height: 16px; fill: #bbb; flex-shrink: 0; }
+  .contacts-search-bar span { color: #bbb; font-size: 14px; }
+  .org-breadcrumb-bar {
+    background: white;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+  }
+  .org-breadcrumb-bar span { font-size: 13px; color: #888; }
+  .org-breadcrumb-bar .current { color: #222; font-weight: 600; }
+  .org-breadcrumb-bar svg { width: 14px; height: 14px; fill: #ccc; }
+  .org-dept-list { background: white; flex: 1; }
+  .org-dept-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    gap: 12px;
+  }
+  .org-dept-item:active { background: #f9f9f9; }
+  .org-folder-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #ffebee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .org-folder-icon svg { width: 22px; height: 22px; fill: #D42B2B; }
+  .org-dept-info { flex: 1; }
+  .org-dept-name { font-size: 14px; font-weight: 600; color: #222; }
+  .org-dept-meta { font-size: 12px; color: #aaa; margin-top: 3px; }
+  .org-dept-count-badge {
+    background: #ffebee;
+    color: #D42B2B;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .org-dept-arrow svg { width: 14px; height: 14px; fill: #ccc; }
+  .org-sub-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px 12px 32px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    gap: 12px;
+    background: #fafafa;
+  }
+  .org-sub-item:active { background: #f0f0f0; }
+  .org-sub-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #ffebee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .org-sub-icon svg { width: 18px; height: 18px; fill: #D42B2B; }
+  .org-sub-name { font-size: 13px; font-weight: 600; color: #333; flex: 1; }
+  .org-sub-count { font-size: 12px; color: #aaa; }
+  .org-sub-arrow svg { width: 12px; height: 12px; fill: #ccc; }
+
+  /* ===== 我的 ===== */
+  .profile-header {
+    background: linear-gradient(160deg, #D42B2B 0%, #c01f1f 100%);
+    padding: 18px 20px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .profile-setting-btn {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .profile-setting-btn svg { width: 20px; height: 20px; fill: rgba(255,255,255,0.8); }
+  .profile-avatar-wrap { position: relative; }
+  .profile-avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    border: 3px solid rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700; color: white;
+  }
+  .profile-info { color: white; flex: 1; padding-top: 4px; }
+  .profile-name { font-size: 20px; font-weight: 700; }
+  .profile-job { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .profile-emp-badge {
+    display: inline-flex; align-items: center;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 4px 10px;
+    font-size: 12px; color: white; margin-top: 8px;
+  }
+  .profile-qr-btn {
+    position: absolute;
+    right: 56px; top: 18px;
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .profile-qr-btn svg { width: 18px; height: 18px; fill: white; }
+
+  .menu-group { margin: 16px 16px 0; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .menu-item {
+    display: flex; align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:active { background: #f9f9f9; }
+  .menu-item-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .menu-item-icon svg { width: 18px; height: 18px; fill: white; }
+  .menu-item-text { flex: 1; }
+  .menu-item-title { font-size: 14px; font-weight: 500; color: #222; }
+  .menu-item-right { display: flex; align-items: center; gap: 6px; }
+  .menu-arrow svg { width: 14px; height: 14px; fill: #ccc; }
+  .menu-tag-green { font-size: 12px; color: #00b96b; font-weight: 600; }
+  .menu-tag-red { font-size: 12px; color: #D42B2B; font-weight: 600; background: #fff0f0; padding: 2px 8px; border-radius: 8px; }
+  .logout-btn {
+    margin: 16px 16px 24px;
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    color: #D42B2B;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .logout-btn:active { background: #fff0f0; }
+
+  .page-header {
+    background: #D42B2B;
+    padding: 16px 20px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .page-header-title { font-size: 19px; font-weight: 700; color: white; }
+  .page-header-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .page-header-icon svg { width: 18px; height: 18px; fill: white; }
+  .page-header-actions { display: flex; gap: 8px; }
+
+  .tab-bar {
+    height: 83px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex; align-items: flex-start;
+    padding-top: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  }
+  .tab-btn {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer; padding: 4px 0;
+    position: relative;
+  }
+  .tab-btn-icon {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .tab-btn-icon svg { width: 24px; height: 24px; fill: #ccc; }
+  .tab-btn.active .tab-btn-icon svg { fill: #D42B2B; }
+  .tab-btn-label { font-size: 10px; color: #ccc; }
+  .tab-btn.active .tab-btn-label { color: #D42B2B; font-weight: 600; }
+  .tab-badge {
+    position: absolute; top: -4px; right: -6px;
+    background: #D42B2B; color: white;
+    font-size: 9px; font-weight: 700;
+    min-width: 16px; height: 16px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px;
+    border: 2px solid white;
+  }
+  .vpn-on { color: #00b96b; font-size: 12px; font-weight: 600; }
+  .vpn-off { color: #D42B2B; font-size: 12px; font-weight: 600; }
+
+  /* ===== 登录界面 ===== */
+  .login-screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 100;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .login-screen.hidden { display: none; }
+
+  .login-hero {
+    background: linear-gradient(160deg, #D42B2B 0%, #9b1a1a 100%);
+    padding: 48px 32px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .login-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .login-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .login-logo {
+    width: 64px; height: 64px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    backdrop-filter: blur(4px);
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+  .login-logo svg { width: 32px; height: 32px; fill: white; }
+  .login-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .login-subtitle {
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  }
+
+  .login-body {
+    flex: 1;
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .login-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px 20px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  .login-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+  }
+
+  .login-field {
+    margin-bottom: 16px;
+  }
+  .login-field-label {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .login-field-input {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 0 12px;
+    height: 44px;
+    gap: 8px;
+    transition: border-color .15s;
+  }
+  .login-field-input.focused {
+    border-color: #D42B2B;
+  }
+  .login-field-input svg { width: 16px; height: 16px; fill: #bbb; flex-shrink: 0; }
+  .login-field-input input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: transparent;
+  }
+  .login-field-input input::placeholder { color: #ccc; }
+
+  .login-eye-btn {
+    cursor: pointer;
+    padding: 4px;
+  }
+  .login-eye-btn svg { width: 16px; height: 16px; fill: #bbb; }
+
+  .login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .login-remember {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+  }
+  .login-remember-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid #D42B2B;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    background: #D42B2B;
+  }
+  .login-remember-box svg { width: 10px; height: 10px; fill: white; }
+  .login-forgot { font-size: 12px; color: #D42B2B; }
+
+  .login-btn {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #D42B2B, #c01f1f);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 14px rgba(212,43,43,0.35);
+    transition: opacity .15s;
+    user-select: none;
+  }
+  .login-btn:active { opacity: 0.85; }
+
+  /* loading overlay */
+  .login-loading {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.85);
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-radius: inherit;
+  }
+  .login-loading.show { display: flex; }
+  .login-spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #f0f0f0;
+    border-top-color: #D42B2B;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .login-loading-text { font-size: 13px; color: #888; }
+
+  .login-footer {
+    text-align: center;
+    font-size: 11px;
+    color: #ccc;
+    padding-bottom: 20px;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- ===== 登录界面 ===== -->
+  <div class="login-screen" id="loginScreen">
+    <!-- 登录 loading 遮罩 -->
+    <div class="login-loading" id="loginLoading">
+      <div class="login-spinner"></div>
+      <div class="login-loading-text" id="loginLoadingText">身份验证中…</div>
+    </div>
+
+    <div class="login-hero">
+      <div class="login-logo">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 3h2v-2h-2v-2h-2v2h-2v2h2v2h2v-2zm-2-10h2V5h-2v2z"/></svg>
+      </div>
+      <div class="login-title">云链门户</div>
+      <div class="login-subtitle">一次登录，全域通行</div>
+    </div>
+
+    <div class="login-body">
+      <div class="login-card">
+        <div class="login-card-title">账号登录</div>
+
+        <div class="login-field">
+          <div class="login-field-label">工号 / 用户名</div>
+          <div class="login-field-input" id="fieldUser" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input id="inputUser" type="text" placeholder="请输入工号或用户名" value="" />
+          </div>
+        </div>
+
+        <div class="login-field">
+          <div class="login-field-label">密码</div>
+          <div class="login-field-input" id="fieldPwd" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="inputPwd" type="password" placeholder="请输入密码" />
+            <div class="login-eye-btn" onclick="togglePwd(event)">
+              <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="login-options">
+          <div class="login-remember">
+            <div class="login-remember-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            记住登录状态
+          </div>
+          <div class="login-forgot">忘记密码？</div>
+        </div>
+
+        <div class="login-btn" id="loginBtn" onclick="doLogin()">登 录</div>
+      </div>
+
+      <div class="login-footer">
+        © 中通服供应链 &nbsp;·&nbsp; 技术支持：智链物流创新研究院
+      </div>
+    </div>
+  </div>
+  <!-- ===== 登录界面结束 ===== -->
+
+  <div class="app-content">
+
+    <!-- ===== 工作台 Tab ===== -->
+    <div class="tab-panel active" id="tab-workbench">
+      <div class="workbench-header">
+        <div class="wh-row1">
+          <div class="wh-logo">
+            <div class="wh-logo-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 3h2v-2h-2v-2h-2v2h-2v2h2v2h2v-2zm-2-10h2V5h-2v2z"/></svg>
+            </div>
+            <span class="wh-logo-text">云链门户</span>
+          </div>
+          <div class="wh-actions">
+            <div class="wh-act-btn">
+              <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+            <div class="wh-act-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="wh-greeting">早上好，<strong>张三 👋</strong></div>
+        <div class="wh-search">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <span>搜索应用、功能...</span>
+        </div>
+      </div>
+
+      <!-- 待办统计卡片 -->
+      <div class="todo-card">
+        <div class="todo-card-title">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          待办事项汇总
+        </div>
+        <div class="todo-stats">
+          <div class="todo-stat"><div class="todo-stat-num">12</div><div class="todo-stat-label">待办</div></div>
+          <div class="todo-stat"><div class="todo-stat-num">47</div><div class="todo-stat-label">已办</div></div>
+          <div class="todo-stat"><div class="todo-stat-num">3</div><div class="todo-stat-label">待提醒</div></div>
+          <div class="todo-stat"><div class="todo-stat-num">8</div><div class="todo-stat-label">消息</div></div>
+        </div>
+      </div>
+
+      <!-- 常用应用 -->
+      <div class="section-header">
+        <span class="section-title">常用应用</span>
+        <span class="section-more">管理 <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
+      </div>
+      <div class="quick-apps">
+        <div class="quick-app">
+          <div class="quick-app-icon red"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+          <span class="quick-app-label">云小链</span>
+        </div>
+        <div class="quick-app">
+          <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <span class="quick-app-label">OA系统</span>
+        </div>
+        <div class="quick-app">
+          <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <span class="quick-app-label">BI系统</span>
+        </div>
+        <div class="quick-app">
+          <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+          <span class="quick-app-label">实验室检测</span>
+        </div>
+        <div class="quick-app">
+          <div class="quick-app-icon add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
+          <span class="quick-app-label" style="color:#bbb;">添加</span>
+        </div>
+      </div>
+
+      <!-- 应用列表 -->
+      <div class="section-header" style="padding-top:14px;">
+        <span class="section-title">应用列表</span>
+      </div>
+
+      <div class="apps-grid">
+
+        <!-- 云小链 -->
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-icon">
+              <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+            </div>
+            <div class="system-info">
+              <div class="system-name">云小链</div>
+              <div class="system-desc">企业级智能问答助手，随时提问即时获取答案</div>
+            </div>
+          </div>
+          <div class="system-shortcuts">
+            <div class="shortcut-tag red">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              快速问答
+            </div>
+          </div>
+          <div class="system-card-footer">
+            <div class="system-open-btn">打开</div>
+          </div>
+        </div>
+
+        <!-- OA系统 -->
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-icon blue">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            </div>
+            <div class="system-info">
+              <div class="system-name">OA系统</div>
+              <div class="system-desc">统一办公审批入口，支持流程发起与待办处理</div>
+            </div>
+          </div>
+          <div class="system-shortcuts">
+            <div class="shortcut-tag blue">
+              <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+              会议室预订
+            </div>
+            <div class="shortcut-tag blue">
+              <svg viewBox="0 0 24 24"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
+              出差申请
+            </div>
+            <div class="shortcut-tag blue">
+              <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              用车申请
+            </div>
+          </div>
+          <div class="system-card-footer">
+            <div class="system-open-btn">打开</div>
+          </div>
+        </div>
+
+        <!-- BI系统 -->
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-icon green">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            </div>
+            <div class="system-info">
+              <div class="system-name">BI系统</div>
+              <div class="system-desc">多维数据可视化分析，快速洞察业务趋势</div>
+            </div>
+          </div>
+          <div class="system-shortcuts">
+            <div class="shortcut-tag green">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+              数据报表
+            </div>
+            <div class="shortcut-tag green">
+              <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+              指标分析
+            </div>
+          </div>
+          <div class="system-card-footer">
+            <div class="system-open-btn">打开</div>
+          </div>
+        </div>
+
+        <!-- 实验室检测 -->
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-icon orange">
+              <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg>
+            </div>
+            <div class="system-info">
+              <div class="system-name">实验室检测</div>
+              <div class="system-desc">检测任务全程追踪，支持报告查询与推送</div>
+            </div>
+          </div>
+          <div class="system-shortcuts">
+            <div class="shortcut-tag orange">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              检测申请
+            </div>
+            <div class="shortcut-tag orange">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              结果查询
+            </div>
+            <div class="shortcut-tag orange">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+              待办处理
+            </div>
+          </div>
+          <div class="system-card-footer">
+            <div class="system-open-btn">打开</div>
+          </div>
+        </div>
+
+      </div><!-- end apps-grid -->
+    </div><!-- end 工作台 -->
+
+
+    <!-- ===== 消息中心 Tab ===== -->
+    <div class="tab-panel" id="tab-message">
+      <div class="page-header">
+        <span class="page-header-title">消息中心</span>
+        <div class="page-header-actions">
+          <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+          <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
+        </div>
+      </div>
+      <div class="msg-filter">
+        <div class="filter-chip active">全部</div>
+        <div class="filter-chip">系统通知</div>
+        <div class="filter-chip">业务待阅</div>
+        <div class="filter-chip">已阅消息</div>
+        <div class="filter-chip">消息设置</div>
+      </div>
+      <div class="notice-banner">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <span>您有 <strong style="color:#D42B2B">3条</strong> 未读重要消息，请及时处理</span>
+      </div>
+      <div class="msg-list">
+        <div class="msg-section-title">今天</div>
+        <div class="msg-item">
+          <div class="msg-avatar red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">OA系统</span><div class="msg-meta"><span class="msg-time">14:30</span><span class="msg-unread">3</span></div></div><div class="msg-text">【待办提醒】您有一条"采购申请"审批待办，请及时处理</div></div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-avatar orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">实验室检测系统</span><div class="msg-meta"><span class="msg-time">11:20</span><span class="msg-unread">2</span></div></div><div class="msg-text">【检测完成】样品编号SN20260415-001检测报告已生成</div></div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">系统通知</span><div class="msg-meta"><span class="msg-time">09:05</span><span class="msg-unread">1</span></div></div><div class="msg-text">系统将于今晚22:00-24:00进行例行维护，请提前做好准备</div></div>
+        </div>
+        <div class="msg-section-title">昨天</div>
+        <div class="msg-item">
+          <div class="msg-avatar green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">BI系统</span><span class="msg-time">16:45</span></div><div class="msg-text">上月销售数据报表已生成，可在BI系统查看详情</div></div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-avatar purple"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">云小链</span><span class="msg-time">10:15</span></div><div class="msg-text">您的账号已完成云小链单点登录绑定，可正常使用</div></div>
+        </div>
+      </div>
+    </div><!-- end 消息中心 -->
+
+
+    <!-- ===== 通讯录 Tab ===== -->
+    <div class="tab-panel" id="tab-contacts">
+      <div class="page-header">
+        <span class="page-header-title">通讯录</span>
+        <div class="page-header-actions">
+          <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+        </div>
+      </div>
+      <div class="contacts-search-bar">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <span>搜索姓名、部门...</span>
+      </div>
+      <div class="org-breadcrumb-bar">
+        <span class="current">某企业集团</span>
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        <span style="color:#D42B2B;">所有部门</span>
+      </div>
+
+      <div class="org-dept-list">
+        <div class="org-dept-item" onclick="toggleSub(this)">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info">
+            <div class="org-dept-name">集团总部</div>
+            <div class="org-dept-meta">直属部门 · 6个</div>
+          </div>
+          <div class="org-dept-count-badge">139人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-sub-item sub-children" style="display:none;">
+          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="org-sub-name">行政管理部</div>
+          <div class="org-sub-count">18人</div>
+          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-sub-item sub-children" style="display:none;">
+          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+          <div class="org-sub-name">财务部</div>
+          <div class="org-sub-count">12人</div>
+          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-sub-item sub-children" style="display:none;">
+          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+          <div class="org-sub-name">人力资源部</div>
+          <div class="org-sub-count">15人</div>
+          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">技术研发中心</div><div class="org-dept-meta">下设部门 · 5个</div></div>
+          <div class="org-dept-count-badge">405人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">销售事业部</div><div class="org-dept-meta">下设部门 · 3个</div></div>
+          <div class="org-dept-count-badge">577人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">生产制造部</div><div class="org-dept-meta">下设部门 · 4个</div></div>
+          <div class="org-dept-count-badge">841人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">质量检测中心</div><div class="org-dept-meta">下设部门 · 2个</div></div>
+          <div class="org-dept-count-badge">257人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">供应链管理部</div><div class="org-dept-meta">下设部门 · 3个</div></div>
+          <div class="org-dept-count-badge">242人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">市场营销部</div><div class="org-dept-meta">下设部门 · 2个</div></div>
+          <div class="org-dept-count-badge">158人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">客户服务部</div><div class="org-dept-meta">下设部门 · 2个</div></div>
+          <div class="org-dept-count-badge">287人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">战略发展部</div><div class="org-dept-meta">下设部门 · 1个</div></div>
+          <div class="org-dept-count-badge">88人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+        <div class="org-dept-item" style="border-bottom:none;">
+          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
+          <div class="org-dept-info"><div class="org-dept-name">信息化中心</div><div class="org-dept-meta">下设部门 · 2个</div></div>
+          <div class="org-dept-count-badge">104人</div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+        </div>
+      </div>
+    </div><!-- end 通讯录 -->
+
+
+    <!-- ===== 我的 Tab ===== -->
+    <div class="tab-panel" id="tab-mine">
+      <div class="profile-header">
+        <div class="profile-qr-btn"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm2 2v3h3V5H5zm8-2h7v7h-7zm2 2v3h3V5h-3zM3 13h7v7H3zm2 2v3h3v-3H5zm13-2h2v2h-2zm-4 0h2v2h-2zm2 2h2v2h-2zm-2 2h2v2h-2zm2 2h2v2h-2zm2-2h2v2h-2z"/></svg></div>
+        <div class="profile-setting-btn"><svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg></div>
+        <div class="profile-avatar-wrap"><div class="profile-avatar">张</div></div>
+        <div class="profile-info">
+          <div class="profile-name">张三</div>
+          <div class="profile-job">研发中心 | 高级工程师</div>
+          <div class="profile-emp-badge">
+            <svg style="width:14px;height:14px;fill:rgba(255,255,255,0.8);margin-right:4px;" viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.54 15.46 0 12 0S6 2.54 6 4.64c0 .48.11.92.18 1.36H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8-4c1.68 0 3 1.32 3 2.64 0 .48-.11.92-.31 1.36H9.31C9.11 5.56 9 5.12 9 4.64 9 3.32 10.32 2 12 2zM12 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+            工号：RD00123
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-item">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">个人信息</div></div>
+          <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
+        </div>
+        <div class="menu-item" style="border-bottom:none;">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#43a047,#66bb6a);"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">修改密码</div></div>
+          <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-item">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#f57c00,#ffb74d);"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">意见反馈</div></div>
+          <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
+        </div>
+        <div class="menu-item" style="border-bottom:none;">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#00838f,#4dd0e1);"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">反馈历史</div></div>
+          <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-item">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#00796b,#4db6ac);"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4c1.4 0 2.8.5 3.86 1.14l-8.72 8.72C6.5 13.8 6 12.4 6 11V8.26L12 5zm0 14c-3.53-1-6-4.4-6-7.97v-.16l9.56-9.56C16.47 7.58 18 9.2 18 11c0 3.6-2.47 6.97-6 8z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">VPN检测</div></div>
+          <div class="menu-item-right">
+            <span class="vpn-on">● 已连接</span>
+            <div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+          </div>
+        </div>
+        <div class="menu-item" style="border-bottom:none;">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">版本检测</div></div>
+          <div class="menu-item-right">
+            <span class="menu-tag-green">v2.1.3 已是最新</span>
+            <div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logout-btn">退出登录</div>
+    </div><!-- end 我的 -->
+
+  </div><!-- end app-content -->
+
+  <div class="tab-bar">
+    <div class="tab-btn active" id="btn-workbench" onclick="switchTab('workbench')">
+      <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div>
+      <span class="tab-btn-label">工作台</span>
+    </div>
+    <div class="tab-btn" id="btn-message" onclick="switchTab('message')">
+      <div class="tab-btn-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        <div class="tab-badge">6</div>
+      </div>
+      <span class="tab-btn-label">消息</span>
+    </div>
+    <div class="tab-btn" id="btn-contacts" onclick="switchTab('contacts')">
+      <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M20 0H4v2h16V0zM4 24h16v-2H4v2zM20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2.75c1.24 0 2.25 1.01 2.25 2.25s-1.01 2.25-2.25 2.25S9.75 10.24 9.75 9 10.76 6.75 12 6.75zM17 17H7v-1.5c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5V17z"/></svg></div>
+      <span class="tab-btn-label">通讯录</span>
+    </div>
+    <div class="tab-btn" id="btn-mine" onclick="switchTab('mine')">
+      <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+      <span class="tab-btn-label">我的</span>
+    </div>
+  </div>
+
+</div><!-- end phone-frame -->
+
+<script>
+/* ===== 登录逻辑 ===== */
+function focusField(el) {
+  document.querySelectorAll('.login-field-input').forEach(f => f.classList.remove('focused'));
+  el.classList.add('focused');
+  el.querySelector('input') && el.querySelector('input').focus();
+}
+
+var pwdVisible = false;
+function togglePwd(e) {
+  e.stopPropagation();
+  pwdVisible = !pwdVisible;
+  var inp = document.getElementById('inputPwd');
+  inp.type = pwdVisible ? 'text' : 'password';
+  document.getElementById('eyeIcon').innerHTML = pwdVisible
+    ? '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>'
+    : '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+}
+
+function doLogin() {
+  var user = document.getElementById('inputUser').value.trim();
+  var pwd  = document.getElementById('inputPwd').value;
+
+  var loading = document.getElementById('loginLoading');
+  loading.classList.add('show');
+  document.getElementById('loginLoadingText').textContent = '身份验证中…';
+
+  setTimeout(function() {
+    document.getElementById('loginLoadingText').textContent = '正在获取SSO凭证…';
+    setTimeout(function() {
+      document.getElementById('loginLoadingText').textContent = '正在进入系统…';
+      setTimeout(function() {
+        loading.classList.remove('show');
+        document.getElementById('loginScreen').classList.add('hidden');
+      }, 600);
+    }, 700);
+  }, 1000);
+}
+
+/* ===== 登出：回到登录页 ===== */
+document.querySelectorAll('.logout-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.getElementById('loginScreen').classList.remove('hidden');
+    switchTab('workbench');
+  });
+});
+
+/* ===== Tab切换 ===== */
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('btn-' + name).classList.add('active');
+  document.getElementById('tab-' + name).scrollTop = 0;
+}
+
+function toggleSub(el) {
+  const siblings = [];
+  let next = el.nextElementSibling;
+  while (next && next.classList.contains('sub-children')) {
+    siblings.push(next);
+    next = next.nextElementSibling;
+  }
+  const isOpen = siblings.length > 0 && siblings[0].style.display !== 'none';
+  siblings.forEach(s => s.style.display = isOpen ? 'none' : 'flex');
+  const arrow = el.querySelector('.org-dept-arrow svg');
+  if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+/* Enter键登录 */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !document.getElementById('loginScreen').classList.contains('hidden')) {
+    doLogin();
+  }
+});
+</script>
+</body>
+</html>
