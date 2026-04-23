@@ -128,9 +128,20 @@
   .quick-app-icon.green svg { fill: white; }
   .quick-app-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
   .quick-app-icon.orange svg { fill: white; }
+  .quick-app-icon.purple { background: linear-gradient(135deg, #7b1fa2, #ab47bc); }
+  .quick-app-icon.purple svg { fill: white; }
   .quick-app-icon.add-btn { background: #f5f5f5; border: 2px dashed #ddd; }
   .quick-app-icon.add-btn svg { fill: #bbb; width: 18px; height: 18px; }
   .quick-app-label { font-size: 10px; color: #555; text-align: center; line-height: 1.2; }
+  .quick-app-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .quick-app-del {
+    position: absolute; top: -4px; right: -2px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: rgba(0,0,0,0.45); color: white;
+    font-size: 11px; line-height: 16px; text-align: center;
+    cursor: pointer; display: none; z-index: 2;
+  }
+  .quick-app:hover .quick-app-del { display: block; }
 
   /* 应用列表 - 单列卡片，垂直滚动 */
   .apps-grid {
@@ -1125,20 +1136,39 @@
       </div>
       <div class="quick-apps">
         <div class="quick-app">
-          <div class="quick-app-icon red"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
-          <span class="quick-app-label">云小链</span>
+          <div class="quick-app-wrap">
+            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
+            <div class="quick-app-icon red"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+            <span class="quick-app-label">云小链</span>
+          </div>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
-          <span class="quick-app-label">OA系统</span>
+          <div class="quick-app-wrap">
+            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
+            <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+            <span class="quick-app-label">OA系统</span>
+          </div>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-          <span class="quick-app-label">BI系统</span>
+          <div class="quick-app-wrap">
+            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
+            <div class="quick-app-icon purple"><svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+            <span class="quick-app-label">供应链系统</span>
+          </div>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
-          <span class="quick-app-label">实验室检测</span>
+          <div class="quick-app-wrap">
+            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
+            <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+            <span class="quick-app-label">BI系统</span>
+          </div>
+        </div>
+        <div class="quick-app">
+          <div class="quick-app-wrap">
+            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
+            <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+            <span class="quick-app-label">实验室检测</span>
+          </div>
         </div>
         <div class="quick-app" onclick="showAppPicker()">
           <div class="quick-app-icon add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
@@ -1468,11 +1498,11 @@
             <div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
           </div>
         </div>
-        <div class="menu-item" onclick="showVersionHistory()" style="border-bottom:none;">
-          <div class="menu-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
-          <div class="menu-item-text"><div class="menu-item-title">版本检测</div></div>
+        <div class="menu-item" onclick="showAddVersion()" style="border-bottom:none;">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#5e35b1,#9575cd);"><svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">维护记录</div></div>
           <div class="menu-item-right">
-            <span class="menu-tag-green">v2.1.3 已是最新</span>
+            <span class="menu-tag-green">3条记录</span>
             <div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
           </div>
         </div>
@@ -1498,68 +1528,7 @@
       </div>
     </div>
 
-    <!-- ===== 后台管理 Tab ===== -->
-    <div class="tab-panel" id="tab-admin">
-      <div class="page-header">
-        <span class="page-header-title">后台管理</span>
-      </div>
-      <div class="admin-panel">
-        <!-- 版本更新记录维护 -->
-        <div class="admin-card">
-          <div class="admin-card-title">
-            <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
-            版本更新记录维护
-          </div>
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>版本号</th><th>更新日期</th><th>类型</th><th>操作</th>
-              </tr>
-            </thead>
-            <tbody id="admin-version-tbody">
-              <tr>
-                <td><span class="ver-tag">v2.1.3</span></td>
-                <td>2026-04-22</td>
-                <td>正式版</td>
-                <td><span class="admin-action-btn btn-edit" onclick="editVersion(0)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
-              </tr>
-              <tr>
-                <td><span class="ver-tag">v2.1.2</span></td>
-                <td>2026-04-10</td>
-                <td>正式版</td>
-                <td><span class="admin-action-btn btn-edit" onclick="editVersion(1)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
-              </tr>
-              <tr>
-                <td><span class="ver-tag ver-tag-draft">v2.2.0</span></td>
-                <td>2026-04-28</td>
-                <td>内测版</td>
-                <td><span class="admin-action-btn btn-edit" onclick="editVersion(2)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="admin-add-btn" onclick="showAddVersion()">
-            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            新增版本记录
-          </div>
-        </div>
-        <!-- 其他后台功能占位 -->
-        <div class="admin-card" style="margin-top:12px;">
-          <div class="admin-card-title">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-            集成配置
-          </div>
-          <table class="admin-table">
-            <thead><tr><th>系统</th><th>状态</th><th>操作</th></tr></thead>
-            <tbody>
-              <tr><td>云小链 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
-              <tr><td>OA系统 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
-              <tr><td>BI系统 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
-              <tr><td>实验室检测 SSO</td><td><span class="vpn-off">○ 未配置</span></td><td><span class="admin-action-btn btn-edit">配置</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div><!-- end 后台 -->
+
 
   </div><!-- end app-content -->
 
@@ -1686,10 +1655,7 @@
       <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
       <span class="tab-btn-label">我的</span>
     </div>
-    <div class="tab-btn" id="btn-admin" onclick="switchTab('admin')">
-      <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
-      <span class="tab-btn-label">后台</span>
-    </div>
+
   </div>
 
 </div><!-- end phone-frame -->
@@ -1770,6 +1736,16 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+/* ===== 取消常用 ===== */
+function removeQuickApp(btn) {
+  if (!confirm('确定要从常用应用中移除吗？')) return;
+  var quickApp = btn.closest('.quick-app');
+  quickApp.style.transition = 'transform 0.2s, opacity 0.2s';
+  quickApp.style.transform = 'scale(0.7)';
+  quickApp.style.opacity = '0';
+  setTimeout(function() { quickApp.remove(); }, 200);
+}
+
 /* ===== 应用选择弹窗 ===== */
 function showAppPicker() {
   document.getElementById('appPicker').classList.add('show');
@@ -1798,11 +1774,12 @@ function addAppToQuick(el, appName, colorClass) {
     '云小链': '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
     'OA系统': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>',
     'BI系统': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>',
-    '实验室检测': '<path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/>'
+    '实验室检测': '<path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/>',
+    '供应链系统': '<path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>'
   };
   var newApp = document.createElement('div');
   newApp.className = 'quick-app';
-  newApp.innerHTML = '<div class="quick-app-icon ' + colorClass + '"><svg viewBox="0 0 24 24" fill="white">' + (iconMap[appName] || '') + '</svg></div><span class="quick-app-label">' + appName + '</span>';
+  newApp.innerHTML = '<div class="quick-app-wrap"><div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div><div class="quick-app-icon ' + colorClass + '"><svg viewBox="0 0 24 24" fill="white">' + (iconMap[appName] || '') + '</svg></div><span class="quick-app-label">' + appName + '</span></div>';
   quickApps.insertBefore(newApp, addBtn);
 }
 
