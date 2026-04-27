@@ -128,20 +128,9 @@
   .quick-app-icon.green svg { fill: white; }
   .quick-app-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
   .quick-app-icon.orange svg { fill: white; }
-  .quick-app-icon.purple { background: linear-gradient(135deg, #7b1fa2, #ab47bc); }
-  .quick-app-icon.purple svg { fill: white; }
   .quick-app-icon.add-btn { background: #f5f5f5; border: 2px dashed #ddd; }
   .quick-app-icon.add-btn svg { fill: #bbb; width: 18px; height: 18px; }
   .quick-app-label { font-size: 10px; color: #555; text-align: center; line-height: 1.2; }
-  .quick-app-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .quick-app-del {
-    position: absolute; top: -4px; right: -2px;
-    width: 16px; height: 16px; border-radius: 50%;
-    background: rgba(0,0,0,0.45); color: white;
-    font-size: 11px; line-height: 16px; text-align: center;
-    cursor: pointer; display: none; z-index: 2;
-  }
-  .quick-app:hover .quick-app-del { display: block; }
 
   /* 应用列表 - 单列卡片，垂直滚动 */
   .apps-grid {
@@ -739,6 +728,577 @@
     padding-bottom: 20px;
     margin-top: auto;
   }
+
+  /* ===== 注册相关 ===== */
+  .login-register-link {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 14px;
+  }
+  .login-register-link span {
+    color: #D42B2B;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .reg-sms-btn {
+    height: 100%;
+    padding: 0 12px;
+    background: #D42B2B;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border-radius: 0 9px 9px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .reg-sms-btn.counting { background: #ccc; }
+
+  /* ===== 消息搜索框 ===== */
+  .msg-search-bar {
+    display: flex;
+    align-items: center;
+    margin: 10px 16px 0;
+    background: white;
+    border-radius: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .msg-search-bar svg { width: 15px; height: 15px; fill: #bbb; flex-shrink: 0; }
+  .msg-search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #333;
+    background: transparent;
+  }
+  .msg-search-bar input::placeholder { color: #ccc; }
+
+  /* ===== 待办搜索框 ===== */
+  .todo-search-bar {
+    display: flex;
+    align-items: center;
+    margin: 10px 16px 0;
+    background: white;
+    border-radius: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .todo-search-bar svg { width: 15px; height: 15px; fill: #bbb; flex-shrink: 0; }
+  .todo-search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #333;
+    background: transparent;
+  }
+  .todo-search-bar input::placeholder { color: #ccc; }
+
+  /* ===== 待办系统分组卡片 ===== */
+  .todo-group-card {
+    margin: 10px 16px 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .todo-group-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f5f5f5;
+    gap: 8px;
+  }
+  .todo-group-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .todo-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    flex: 1;
+  }
+  .todo-group-count {
+    font-size: 11px;
+    color: white;
+    background: #D42B2B;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 600;
+  }
+  .todo-item-v2 {
+    display: flex;
+    align-items: flex-start;
+    padding: 11px 14px;
+    border-bottom: 1px solid #f8f8f8;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .todo-item-v2:last-child { border-bottom: none; }
+  .todo-item-v2-body { flex: 1; min-width: 0; }
+  .todo-item-v2-title {
+    font-size: 13px;
+    color: #222;
+    line-height: 1.5;
+    margin-bottom: 3px;
+  }
+  .todo-item-v2-meta {
+    font-size: 11px;
+    color: #aaa;
+  }
+  .todo-item-v2-arrow {
+    width: 16px; height: 16px;
+    fill: #ccc;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ===== 面包屑优化 ===== */
+  .org-bc-item {
+    color: #999;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .org-bc-item:last-child { color: #D42B2B; font-weight: 600; cursor: default; }
+  .org-bc-sep { margin: 0 4px; color: #ccc; font-size: 12px; }
+  .org-bc-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #D42B2B;
+    cursor: pointer;
+    padding: 6px 0;
+    margin-right: 8px;
+  }
+  .org-bc-back svg { width: 14px; height: 14px; fill: #D42B2B; }
+
+  /* 成员列表 */
+  .org-member-panel {
+    flex: 1;
+    overflow-y: auto;
+    background: #f5f5f5;
+  }
+  .org-member-dept-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px 6px;
+    font-size: 12px;
+    color: #999;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .org-member-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    margin: 0 16px 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    gap: 12px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .org-member-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .org-member-info { flex: 1; min-width: 0; }
+  .org-member-name { font-size: 14px; font-weight: 600; color: #222; }
+  .org-member-title { font-size: 12px; color: #999; margin-top: 2px; }
+  .org-member-arrow { width: 16px; height: 16px; fill: #ccc; }
+
+  /* ===== 名片弹窗 ===== */
+  .contact-card-overlay {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 80;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .contact-card-overlay.show { display: flex; }
+  .contact-card-popup {
+    background: white;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    padding: 24px 20px 32px;
+    animation: slideUp .25s ease;
+  }
+  .contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .contact-card-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D42B2B, #e85555);
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-card-info .contact-card-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .contact-card-info .contact-card-title {
+    font-size: 12px;
+    color: #999;
+    margin-top: 3px;
+  }
+  .contact-card-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 0 0 12px;
+  }
+  .contact-card-row {
+    display: flex;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid #f8f8f8;
+  }
+  .contact-card-label {
+    font-size: 12px;
+    color: #aaa;
+    width: 44px;
+    flex-shrink: 0;
+  }
+  .contact-card-value {
+    font-size: 13px;
+    color: #333;
+    flex: 1;
+  }
+  .contact-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .contact-card-action-btn {
+    flex: 1;
+    height: 40px;
+    background: #fff5f5;
+    color: #D42B2B;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #ffd5d5;
+  }
+  .contact-card-action-btn svg { width: 15px; height: 15px; fill: #D42B2B; }
+  .contact-card-close {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  /* ===== 应用选择弹窗 ===== */
+  .app-picker-overlay {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 50;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+  .app-picker-overlay.show { display: flex; }
+  .app-picker-sheet {
+    background: white;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 0 30px;
+    max-height: 70vh;
+    overflow-y: auto;
+    animation: slideUp .25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .app-picker-handle {
+    width: 36px; height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    margin: 0 auto 14px;
+  }
+  .app-picker-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+    margin-bottom: 14px;
+    padding: 0 16px;
+  }
+  .app-picker-search {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 0 16px 14px;
+    gap: 8px;
+  }
+  .app-picker-search svg { width: 14px; height: 14px; fill: #bbb; flex-shrink: 0; }
+  .app-picker-search input {
+    border: none; outline: none; background: transparent;
+    font-size: 13px; color: #222; flex: 1;
+  }
+  .app-picker-search input::placeholder { color: #ccc; }
+  .app-picker-section { padding: 0 16px 8px; }
+  .app-picker-section-title { font-size: 11px; color: #999; margin-bottom: 8px; }
+  .app-picker-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .app-picker-item {
+    width: calc(33.33% - 7px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px 4px;
+    border-radius: 10px;
+    border: 1.5px solid transparent;
+    transition: all .15s;
+  }
+  .app-picker-item:active { background: #f9f0f0; border-color: #D42B2B; }
+  .app-picker-item-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .app-picker-item-icon svg { width: 20px; height: 20px; fill: white; }
+  .app-picker-item-label { font-size: 10px; color: #555; text-align: center; }
+  .app-picker-item.added { opacity: 0.45; }
+
+  /* ===== 待办列表页 ===== */
+  .todo-page-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .todo-back-btn {
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .todo-back-btn svg { width: 20px; height: 20px; fill: #666; }
+  .todo-page-title { font-size: 15px; font-weight: 700; color: #222; flex: 1; text-align: center; padding-right: 30px; }
+  .todo-tabs {
+    display: flex;
+    background: white;
+    padding: 0 16px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+  }
+  .todo-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+  }
+  .todo-tab.active { color: #D42B2B; border-bottom-color: #D42B2B; font-weight: 600; }
+  .todo-list { flex: 1; overflow-y: auto; padding: 0 16px 16px; }
+  .todo-item {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .todo-item:active { background: #fafafa; }
+  .todo-check {
+    width: 20px; height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .todo-check.done { background: #D42B2B; border-color: #D42B2B; }
+  .todo-check svg { width: 12px; height: 12px; fill: white; display: none; }
+  .todo-check.done svg { display: block; }
+  .todo-item-info { flex: 1; min-width: 0; }
+  .todo-item-title { font-size: 13px; color: #333; line-height: 1.4; }
+  .todo-item.done .todo-item-title { text-decoration: line-through; color: #aaa; }
+  .todo-item-meta { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .todo-item-tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .tag-oa { background: #e3f2fd; color: #1976d2; }
+  .tag-lab { background: #fff3e0; color: #e65100; }
+  .tag-bi { background: #e8f5e9; color: #2e7d32; }
+  .tag-sys { background: #f3e5f5; color: #7b1fa2; }
+  .todo-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .todo-empty { text-align: center; padding: 40px 0; color: #ccc; font-size: 13px; }
+
+  /* ===== 版本更新记录弹窗 ===== */
+  .version-popup {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 60;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .version-popup.show { display: flex; }
+  .version-card {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 360px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    animation: fadeIn .2s;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .version-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .version-card-title { font-size: 15px; font-weight: 700; color: #222; }
+  .version-close-btn { width: 28px; height: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .version-close-btn svg { width: 18px; height: 18px; fill: #999; }
+  .version-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .version-item:last-child { border-bottom: none; }
+  .version-tag {
+    display: inline-block;
+    background: #D42B2B;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  .version-tag-old { background: #ccc; }
+  .version-date { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+  .version-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+  .version-desc { font-size: 11px; color: #888; line-height: 1.6; }
+
+  /* ===== 后台 Tab ===== */
+  .admin-panel { flex: 1; overflow-y: auto; padding: 0 0 20px; }
+  .admin-card { margin: 16px 16px 0; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .admin-card-title {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .admin-card-title svg { width: 16px; height: 16px; fill: #D42B2B; }
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .admin-table th { background: #fafafa; padding: 8px 10px; text-align: left; color: #888; font-weight: 600; border-bottom: 1px solid #f0f0f0; }
+  .admin-table td { padding: 10px; color: #444; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  .admin-table tr:last-child td { border-bottom: none; }
+  .admin-table tr:hover td { background: #fafafa; }
+  .ver-tag { display: inline-block; background: #D42B2B; color: white; font-size: 10px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+  .ver-tag-draft { background: #ffa500; }
+  .admin-action-btn { padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; border: 1px solid; display: inline-block; }
+  .btn-edit { border-color: #1976d2; color: #1976d2; }
+  .btn-del { border-color: #D42B2B; color: #D42B2B; margin-left: 4px; }
+  .admin-add-btn {
+    margin: 12px 16px 0;
+    height: 40px;
+    background: linear-gradient(135deg, #D42B2B, #c01f1f);
+    color: white;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(212,43,43,0.3);
+  }
+  .admin-add-btn:active { opacity: 0.85; }
+  .admin-add-btn svg { width: 16px; height: 16px; fill: white; }
+  .admin-popup-overlay {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 60;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .admin-popup-overlay.show { display: flex; }
+  .admin-form-card {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 340px;
+    padding: 20px;
+    animation: fadeIn .2s;
+  }
+  .admin-form-title { font-size: 15px; font-weight: 700; color: #222; margin-bottom: 16px; text-align: center; }
+  .admin-form-row { margin-bottom: 12px; }
+  .admin-form-label { font-size: 11px; color: #888; margin-bottom: 5px; }
+  .admin-form-input, .admin-form-textarea, .admin-form-select {
+    width: 100%; padding: 9px 12px; border: 1.5px solid #e8e8e8;
+    border-radius: 8px; font-size: 13px; color: #333; outline: none;
+    transition: border-color .15s;
+  }
+  .admin-form-input:focus, .admin-form-textarea:focus, .admin-form-select:focus { border-color: #D42B2B; }
+  .admin-form-textarea { resize: none; height: 60px; }
+  .admin-form-btns { display: flex; gap: 8px; margin-top: 16px; }
+  .admin-form-btn { flex: 1; height: 40px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .admin-form-btn.cancel { background: #f5f5f5; color: #666; border: none; }
+  .admin-form-btn.submit { background: linear-gradient(135deg, #D42B2B, #c01f1f); color: white; border: none; box-shadow: 0 4px 12px rgba(212,43,43,0.3); }
+  .admin-form-btn:active { opacity: 0.85; }
+  .admin-form-popup-close { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; }
+  .admin-pagination { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px 0; }
+  .admin-pg-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #e8e8e8; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; color: #666; }
+  .admin-pg-btn.active { background: #D42B2B; color: white; border-color: #D42B2B; }
+  .admin-pg-btn svg { width: 14px; height: 14px; fill: currentColor; }
+  .admin-pg-info { font-size: 11px; color: #aaa; margin-left: 4px; }
 </style>
 </head>
 <body>
@@ -793,6 +1353,7 @@
         </div>
 
         <div class="login-btn" id="loginBtn" onclick="doLogin()">登 录</div>
+        <div class="login-register-link">没有账号？<span onclick="showRegisterPanel()">立即注册</span></div>
       </div>
 
       <div class="login-footer">
@@ -800,7 +1361,61 @@
       </div>
     </div>
   </div>
-  <!-- ===== 登录界面结束 ===== -->
+
+  <!-- ===== 注册面板 ===== -->
+  <div class="login-screen" id="registerScreen" style="display:none;">
+    <div class="login-hero" style="padding: 32px 32px 24px;">
+      <div class="login-logo">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 3h2v-2h-2v-2h-2v2h-2v2h2v2h2v-2zm-2-10h2V5h-2v2z"/></svg>
+      </div>
+      <div class="login-title">注册账号</div>
+      <div class="login-subtitle">加入云链门户，开启高效办公</div>
+    </div>
+    <div class="login-body">
+      <div class="login-card">
+        <div class="login-card-title">填写注册信息</div>
+        <div class="login-field">
+          <div class="login-field-label">工号</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.54 15.46 0 12 0S6 2.54 6 4.64c0 .48.11.92.18 1.36H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM12 2c1.68 0 3 1.32 3 2.64 0 .48-.11.92-.31 1.36H9.31C9.11 5.56 9 5.12 9 4.64 9 3.32 10.32 2 12 2z"/></svg>
+            <input id="regUser" type="text" placeholder="请输入员工工号" />
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">姓名</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input id="regName" type="text" placeholder="请输入真实姓名" />
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">手机号</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <input id="regPhone" type="tel" placeholder="请输入手机号码" />
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">验证码</div>
+          <div class="login-field-input" onclick="focusField(this)" style="padding-right: 0;">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="regCode" type="text" placeholder="短信验证码" style="flex:1;" />
+            <div class="reg-sms-btn" onclick="sendSmsCode()">获取验证码</div>
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">设置密码</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="regPwd" type="password" placeholder="请设置6-16位密码" />
+          </div>
+        </div>
+        <div class="login-btn" onclick="doRegister()">注 册</div>
+        <div class="login-register-link">已有账号？<span onclick="backToLogin()">返回登录</span></div>
+      </div>
+      <div class="login-footer">© 中通服供应链 &nbsp;·&nbsp; 技术支持：智链物流创新研究院</div>
+    </div>
+  </div>
 
   <div class="app-content">
 
@@ -830,17 +1445,21 @@
         </div>
       </div>
 
-      <!-- 待办统计卡片 -->
+      <!-- 待办 + 消息 入口卡片 -->
       <div class="todo-card">
         <div class="todo-card-title">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-          待办事项汇总
+          快速入口
         </div>
         <div class="todo-stats">
-          <div class="todo-stat"><div class="todo-stat-num">12</div><div class="todo-stat-label">待办</div></div>
-          <div class="todo-stat"><div class="todo-stat-num">47</div><div class="todo-stat-label">已办</div></div>
-          <div class="todo-stat"><div class="todo-stat-num">3</div><div class="todo-stat-label">待提醒</div></div>
-          <div class="todo-stat"><div class="todo-stat-num">8</div><div class="todo-stat-label">消息</div></div>
+          <div class="todo-stat" onclick="showTodoPage()" style="cursor:pointer;">
+            <div class="todo-stat-num">12</div>
+            <div class="todo-stat-label">待办</div>
+          </div>
+          <div class="todo-stat" onclick="switchTab('message')" style="cursor:pointer;">
+            <div class="todo-stat-num">8</div>
+            <div class="todo-stat-label">消息</div>
+          </div>
         </div>
       </div>
 
@@ -855,34 +1474,18 @@
           <span class="quick-app-label">云小链</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-wrap">
-            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
-            <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
-            <span class="quick-app-label">OA系统</span>
-          </div>
+          <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <span class="quick-app-label">OA系统</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-wrap">
-            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
-            <div class="quick-app-icon purple"><svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
-            <span class="quick-app-label">供应链系统</span>
-          </div>
+          <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <span class="quick-app-label">BI系统</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-wrap">
-            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
-            <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-            <span class="quick-app-label">BI系统</span>
-          </div>
+          <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+          <span class="quick-app-label">实验室检测</span>
         </div>
-        <div class="quick-app">
-          <div class="quick-app-wrap">
-            <div class="quick-app-del" onclick="event.stopPropagation();removeQuickApp(this)">×</div>
-            <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
-            <span class="quick-app-label">实验室检测</span>
-          </div>
-        </div>
-        <div class="quick-app">
+        <div class="quick-app" onclick="showAppPicker()">
           <div class="quick-app-icon add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
           <span class="quick-app-label" style="color:#bbb;">添加</span>
         </div>
@@ -1012,43 +1615,53 @@
       <div class="page-header">
         <span class="page-header-title">消息中心</span>
         <div class="page-header-actions">
-          <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
           <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
         </div>
       </div>
-      <div class="msg-filter">
-        <div class="filter-chip active">全部</div>
-        <div class="filter-chip">系统通知</div>
-        <div class="filter-chip">业务待阅</div>
-        <div class="filter-chip">已阅消息</div>
-        <div class="filter-chip">消息设置</div>
+      <!-- 消息搜索框 -->
+      <div class="msg-search-bar">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" placeholder="搜索消息..." id="msgSearchInput" oninput="filterMsgList(this.value)" />
       </div>
-      <div class="notice-banner">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-        <span>您有 <strong style="color:#D42B2B">3条</strong> 未读重要消息，请及时处理</span>
-      </div>
-      <div class="msg-list">
+      <div class="msg-list" id="msgListContainer">
         <div class="msg-section-title">今天</div>
-        <div class="msg-item">
+        <div class="msg-item" data-text="OA系统 待办提醒 采购申请 审批待办">
           <div class="msg-avatar red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">OA系统</span><div class="msg-meta"><span class="msg-time">14:30</span><span class="msg-unread">3</span></div></div><div class="msg-text">【待办提醒】您有一条"采购申请"审批待办，请及时处理</div></div>
         </div>
-        <div class="msg-item">
+        <div class="msg-item" data-text="实验室检测系统 检测完成 样品编号 报告">
           <div class="msg-avatar orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">实验室检测系统</span><div class="msg-meta"><span class="msg-time">11:20</span><span class="msg-unread">2</span></div></div><div class="msg-text">【检测完成】样品编号SN20260415-001检测报告已生成</div></div>
         </div>
-        <div class="msg-item">
+        <div class="msg-item" data-text="系统通知 例行维护 22:00">
           <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">系统通知</span><div class="msg-meta"><span class="msg-time">09:05</span><span class="msg-unread">1</span></div></div><div class="msg-text">系统将于今晚22:00-24:00进行例行维护，请提前做好准备</div></div>
         </div>
+        <div class="msg-item" data-text="BI系统 销售数据 报表已生成">
+          <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">云小链</span><div class="msg-meta"><span class="msg-time">08:40</span></div></div><div class="msg-text">【库存预警】原材料A-003库存低于安全线，请及时补货</div></div>
+        </div>
         <div class="msg-section-title">昨天</div>
-        <div class="msg-item">
+        <div class="msg-item" data-text="BI系统 销售数据 报表已生成">
           <div class="msg-avatar green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">BI系统</span><span class="msg-time">16:45</span></div><div class="msg-text">上月销售数据报表已生成，可在BI系统查看详情</div></div>
         </div>
-        <div class="msg-item">
+        <div class="msg-item" data-text="OA系统 会议室 审批通过">
+          <div class="msg-avatar red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">OA系统</span><span class="msg-time">14:10</span></div><div class="msg-text">【审批通过】会议室预订申请已批准，4月25日 A301</div></div>
+        </div>
+        <div class="msg-item" data-text="云小链 单点登录 绑定完成">
           <div class="msg-avatar purple"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">云小链</span><span class="msg-time">10:15</span></div><div class="msg-text">您的账号已完成云小链单点登录绑定，可正常使用</div></div>
+        </div>
+        <div class="msg-section-title">更早</div>
+        <div class="msg-item" data-text="实验室检测 报告已归档 样品">
+          <div class="msg-avatar orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">实验室检测系统</span><span class="msg-time">04-21</span></div><div class="msg-text">样品SN20260418-007检测报告已归档，可下载查看</div></div>
+        </div>
+        <div class="msg-item" data-text="系统通知 权限变更 角色更新">
+          <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+          <div class="msg-content"><div class="msg-top"><span class="msg-sender">系统通知</span><span class="msg-time">04-20</span></div><div class="msg-text">您的账号权限已更新，新增"报表查看"角色，请登录确认</div></div>
         </div>
       </div>
     </div><!-- end 消息中心 -->
@@ -1057,7 +1670,7 @@
     <!-- ===== 通讯录 Tab ===== -->
     <div class="tab-panel" id="tab-contacts">
       <div class="page-header">
-        <span class="page-header-title">通讯录</span>
+        <span class="page-header-title" id="contacts-header-title">通讯录</span>
         <div class="page-header-actions">
           <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
         </div>
@@ -1066,94 +1679,94 @@
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         <span>搜索姓名、部门...</span>
       </div>
-      <div class="org-breadcrumb-bar">
-        <span class="current">某企业集团</span>
-        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-        <span style="color:#D42B2B;">所有部门</span>
+      <!-- 面包屑导航 -->
+      <div class="org-breadcrumb-bar" id="org-breadcrumb">
+        <span class="org-bc-item" onclick="navToRoot()">某企业集团</span>
       </div>
 
-      <div class="org-dept-list">
-        <div class="org-dept-item" onclick="toggleSub(this)">
+      <!-- 部门列表层（根级） -->
+      <div class="org-dept-list" id="org-dept-panel">
+        <div class="org-dept-item" onclick="enterDept('集团总部', 6, 139)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
-          <div class="org-dept-info">
-            <div class="org-dept-name">集团总部</div>
-            <div class="org-dept-meta">直属部门 · 6个</div>
-          </div>
+          <div class="org-dept-info"><div class="org-dept-name">集团总部</div><div class="org-dept-meta">直属部门 · 6个</div></div>
           <div class="org-dept-count-badge">139人</div>
-          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-sub-item sub-children" style="display:none;">
-          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-          <div class="org-sub-name">行政管理部</div>
-          <div class="org-sub-count">18人</div>
-          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
-        </div>
-        <div class="org-sub-item sub-children" style="display:none;">
-          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
-          <div class="org-sub-name">财务部</div>
-          <div class="org-sub-count">12人</div>
-          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
-        </div>
-        <div class="org-sub-item sub-children" style="display:none;">
-          <div class="org-sub-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-          <div class="org-sub-name">人力资源部</div>
-          <div class="org-sub-count">15人</div>
-          <div class="org-sub-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
-        </div>
-
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('技术研发中心', 5, 405)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">技术研发中心</div><div class="org-dept-meta">下设部门 · 5个</div></div>
           <div class="org-dept-count-badge">405人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('销售事业部', 3, 577)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">销售事业部</div><div class="org-dept-meta">下设部门 · 3个</div></div>
           <div class="org-dept-count-badge">577人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('生产制造部', 4, 841)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">生产制造部</div><div class="org-dept-meta">下设部门 · 4个</div></div>
           <div class="org-dept-count-badge">841人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('质量检测中心', 2, 257)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">质量检测中心</div><div class="org-dept-meta">下设部门 · 2个</div></div>
           <div class="org-dept-count-badge">257人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('供应链管理部', 3, 242)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">供应链管理部</div><div class="org-dept-meta">下设部门 · 3个</div></div>
           <div class="org-dept-count-badge">242人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('市场营销部', 2, 158)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">市场营销部</div><div class="org-dept-meta">下设部门 · 2个</div></div>
           <div class="org-dept-count-badge">158人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('客户服务部', 2, 287)">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">客户服务部</div><div class="org-dept-meta">下设部门 · 2个</div></div>
           <div class="org-dept-count-badge">287人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item">
+        <div class="org-dept-item" onclick="enterDept('战略发展部', 1, 88)" style="border-bottom:none;">
           <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
           <div class="org-dept-info"><div class="org-dept-name">战略发展部</div><div class="org-dept-meta">下设部门 · 1个</div></div>
           <div class="org-dept-count-badge">88人</div>
           <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
         </div>
-        <div class="org-dept-item" style="border-bottom:none;">
-          <div class="org-folder-icon"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div>
-          <div class="org-dept-info"><div class="org-dept-name">信息化中心</div><div class="org-dept-meta">下设部门 · 2个</div></div>
-          <div class="org-dept-count-badge">104人</div>
-          <div class="org-dept-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+      </div>
+
+      <!-- 部门成员列表层（点击部门后显示） -->
+      <div class="org-member-panel" id="org-member-panel" style="display:none;">
+        <div id="org-member-list"></div>
+      </div>
+
+      <!-- 名片弹窗 -->
+      <div class="contact-card-overlay" id="contactCardOverlay" onclick="closeContactCard()">
+        <div class="contact-card-popup" onclick="event.stopPropagation()">
+          <div class="contact-card-header">
+            <div class="contact-card-avatar" id="cardAvatar">张</div>
+            <div class="contact-card-info">
+              <div class="contact-card-name" id="cardName">张三</div>
+              <div class="contact-card-title" id="cardTitle">研发中心 | 高级工程师</div>
+            </div>
+          </div>
+          <div class="contact-card-divider"></div>
+          <div class="contact-card-row"><span class="contact-card-label">工号</span><span class="contact-card-value" id="cardId">RD00123</span></div>
+          <div class="contact-card-row"><span class="contact-card-label">手机</span><span class="contact-card-value" id="cardPhone">138****8888</span></div>
+          <div class="contact-card-row"><span class="contact-card-label">邮箱</span><span class="contact-card-value" id="cardEmail">zhangsan@company.com</span></div>
+          <div class="contact-card-row"><span class="contact-card-label">部门</span><span class="contact-card-value" id="cardDept">技术研发中心</span></div>
+          <div class="contact-card-actions">
+            <div class="contact-card-action-btn"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>拨打电话</div>
+            <div class="contact-card-action-btn"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>发送邮件</div>
+          </div>
+          <div class="contact-card-close" onclick="closeContactCard()">关闭</div>
         </div>
       </div>
     </div><!-- end 通讯录 -->
@@ -1176,7 +1789,7 @@
       </div>
 
       <div class="menu-group">
-        <div class="menu-item">
+        <div class="menu-item" onclick="showProfileDetail()">
           <div class="menu-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
           <div class="menu-item-text"><div class="menu-item-title">个人信息</div></div>
           <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
@@ -1194,15 +1807,15 @@
           <div class="menu-item-text"><div class="menu-item-title">意见反馈</div></div>
           <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
         </div>
-        <div class="menu-item" onclick="showAddVersion()" style="border-bottom:none;">
-          <div class="menu-item-icon" style="background:linear-gradient(135deg,#5e35b1,#9575cd);"><svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg></div>
-          <div class="menu-item-text"><div class="menu-item-title">维护记录</div></div>
+        <div class="menu-item" onclick="showVersionHistory()" style="border-bottom:none;">
+          <div class="menu-item-icon" style="background:linear-gradient(135deg,#00838f,#4dd0e1);"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
+          <div class="menu-item-text"><div class="menu-item-title">版本更新记录</div></div>
           <div class="menu-item-right"><div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div></div>
         </div>
       </div>
 
       <div class="menu-group">
-        <div class="menu-item">
+        <div class="menu-item" onclick="showVPNDetail()">
           <div class="menu-item-icon" style="background:linear-gradient(135deg,#00796b,#4db6ac);"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4c1.4 0 2.8.5 3.86 1.14l-8.72 8.72C6.5 13.8 6 12.4 6 11V8.26L12 5zm0 14c-3.53-1-6-4.4-6-7.97v-.16l9.56-9.56C16.47 7.58 18 9.2 18 11c0 3.6-2.47 6.97-6 8z"/></svg></div>
           <div class="menu-item-text"><div class="menu-item-title">VPN检测</div></div>
           <div class="menu-item-right">
@@ -1210,7 +1823,7 @@
             <div class="menu-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
           </div>
         </div>
-        <div class="menu-item" style="border-bottom:none;">
+        <div class="menu-item" onclick="showVersionHistory()" style="border-bottom:none;">
           <div class="menu-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
           <div class="menu-item-text"><div class="menu-item-title">版本检测</div></div>
           <div class="menu-item-right">
@@ -1221,9 +1834,197 @@
       </div>
 
       <div class="logout-btn">退出登录</div>
-    </div><!-- end 我的 -->
+</div><!-- end 我的 -->
+
+    <!-- ===== 待办列表页 ===== -->
+    <div class="tab-panel" id="tab-todopage" style="display:none; background:#f5f5f5;">
+      <div class="todo-page-header">
+        <div class="todo-back-btn" onclick="closeTodoPage()">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </div>
+        <div class="todo-page-title">待办事项</div>
+      </div>
+      <!-- 搜索框 -->
+      <div class="todo-search-bar">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input id="todoSearchInput" type="text" placeholder="搜索待办内容..." oninput="filterTodoList(this.value)" />
+      </div>
+      <div class="todo-tabs">
+        <div class="todo-tab active" id="tab-todo-pending" onclick="switchTodoTab('pending')">待办 <span id="todo-pending-count">(12)</span></div>
+        <div class="todo-tab" id="tab-todo-done" onclick="switchTodoTab('done')">已办 <span id="todo-done-count">(47)</span></div>
+      </div>
+      <div class="todo-list" id="todo-list-container">
+        <!-- 待办列表由JS渲染 -->
+      </div>
+    </div>
+
+    <!-- ===== 后台管理 Tab ===== -->
+    <div class="tab-panel" id="tab-admin">
+      <div class="page-header">
+        <span class="page-header-title">后台管理</span>
+      </div>
+      <div class="admin-panel">
+        <!-- 版本更新记录维护 -->
+        <div class="admin-card">
+          <div class="admin-card-title">
+            <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+            版本更新记录维护
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>版本号</th><th>更新日期</th><th>类型</th><th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="admin-version-tbody">
+              <tr>
+                <td><span class="ver-tag">v2.1.3</span></td>
+                <td>2026-04-22</td>
+                <td>正式版</td>
+                <td><span class="admin-action-btn btn-edit" onclick="editVersion(0)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
+              </tr>
+              <tr>
+                <td><span class="ver-tag">v2.1.2</span></td>
+                <td>2026-04-10</td>
+                <td>正式版</td>
+                <td><span class="admin-action-btn btn-edit" onclick="editVersion(1)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
+              </tr>
+              <tr>
+                <td><span class="ver-tag ver-tag-draft">v2.2.0</span></td>
+                <td>2026-04-28</td>
+                <td>内测版</td>
+                <td><span class="admin-action-btn btn-edit" onclick="editVersion(2)">编辑</span><span class="admin-action-btn btn-del">删除</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="admin-add-btn" onclick="showAddVersion()">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            新增版本记录
+          </div>
+        </div>
+        <!-- 其他后台功能占位 -->
+        <div class="admin-card" style="margin-top:12px;">
+          <div class="admin-card-title">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            集成配置
+          </div>
+          <table class="admin-table">
+            <thead><tr><th>系统</th><th>状态</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr><td>云小链 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
+              <tr><td>OA系统 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
+              <tr><td>BI系统 SSO</td><td><span class="vpn-on">● 已配置</span></td><td><span class="admin-action-btn btn-edit">编辑</span></td></tr>
+              <tr><td>实验室检测 SSO</td><td><span class="vpn-off">○ 未配置</span></td><td><span class="admin-action-btn btn-edit">配置</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- end 后台 -->
 
   </div><!-- end app-content -->
+
+  <!-- ===== 版本更新记录弹窗（移动端用户查看） ===== -->
+  <div class="version-popup" id="versionPopup">
+    <div class="version-card">
+      <div class="version-card-header">
+        <div class="version-card-title">版本更新记录</div>
+        <div class="version-close-btn" onclick="closeVersionHistory()">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </div>
+      </div>
+      <div class="version-item">
+        <div class="version-tag">最新</div>
+        <div class="version-date">2026-04-22</div>
+        <div class="version-title">v2.1.3 更新说明</div>
+        <div class="version-desc">1. 新增统一登录界面<br>2. 优化待办事项入口<br>3. 修复若干已知问题</div>
+      </div>
+      <div class="version-item">
+        <div class="version-tag version-tag-old">历史</div>
+        <div class="version-date">2026-04-10</div>
+        <div class="version-title">v2.1.2 更新说明</div>
+        <div class="version-desc">1. 新增BI系统快捷入口<br>2. 优化通讯录搜索性能</div>
+      </div>
+      <div class="version-item">
+        <div class="version-tag version-tag-old">历史</div>
+        <div class="version-date">2026-04-01</div>
+        <div class="version-title">v2.1.1 更新说明</div>
+        <div class="version-desc">1. 新增实验室检测快捷入口<br>2. 支持单点登录到OA系统</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 应用选择弹窗 ===== -->
+  <div class="app-picker-overlay" id="appPicker">
+    <div class="app-picker-sheet">
+      <div class="app-picker-handle"></div>
+      <div class="app-picker-title">添加到常用应用</div>
+      <div class="app-picker-search">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input placeholder="搜索应用..." id="appSearchInput" oninput="filterAppPicker(this.value)" />
+      </div>
+      <div class="app-picker-section">
+        <div class="app-picker-section-title">已集成系统</div>
+        <div class="app-picker-grid" id="appPickerGrid">
+          <div class="app-picker-item" onclick="addAppToQuick(this, '云小链', 'red')">
+            <div class="app-picker-item-icon" style="background:linear-gradient(135deg,#D42B2B,#e85555);">
+              <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+            </div>
+            <span class="app-picker-item-label">云小链</span>
+          </div>
+          <div class="app-picker-item" onclick="addAppToQuick(this, 'OA系统', 'blue')">
+            <div class="app-picker-item-icon" style="background:linear-gradient(135deg,#1976d2,#42a5f5);">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            </div>
+            <span class="app-picker-item-label">OA系统</span>
+          </div>
+          <div class="app-picker-item" onclick="addAppToQuick(this, 'BI系统', 'green')">
+            <div class="app-picker-item-icon" style="background:linear-gradient(135deg,#388e3c,#66bb6a);">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            </div>
+            <span class="app-picker-item-label">BI系统</span>
+          </div>
+          <div class="app-picker-item" onclick="addAppToQuick(this, '实验室检测', 'orange')">
+            <div class="app-picker-item-icon" style="background:linear-gradient(135deg,#ff7043,#ff9066);">
+              <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg>
+            </div>
+            <span class="app-picker-item-label">实验室检测</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;" onclick="closeAppPicker()"></div>
+  </div>
+
+  <!-- ===== 后台新增/编辑版本记录弹窗 ===== -->
+  <div class="admin-popup-overlay" id="versionFormPopup">
+    <div class="admin-form-card">
+      <div class="admin-form-title" id="versionFormTitle">新增版本记录</div>
+      <div class="admin-form-row">
+        <div class="admin-form-label">版本号</div>
+        <input class="admin-form-input" id="formVerNum" placeholder="如：v2.2.1" />
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-label">版本类型</div>
+        <select class="admin-form-select" id="formVerType">
+          <option>正式版</option>
+          <option>内测版</option>
+          <option>热修复</option>
+        </select>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-label">更新日期</div>
+        <input class="admin-form-input" id="formVerDate" type="date" />
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-label">更新内容</div>
+        <textarea class="admin-form-textarea" id="formVerDesc" placeholder="描述本次更新内容，每行一条"></textarea>
+      </div>
+      <div class="admin-form-btns">
+        <div class="admin-form-btn cancel" onclick="closeVersionForm()">取消</div>
+        <div class="admin-form-btn submit" onclick="saveVersion()">保存</div>
+      </div>
+    </div>
+  </div>
 
   <div class="tab-bar">
     <div class="tab-btn active" id="btn-workbench" onclick="switchTab('workbench')">
@@ -1244,6 +2045,10 @@
     <div class="tab-btn" id="btn-mine" onclick="switchTab('mine')">
       <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
       <span class="tab-btn-label">我的</span>
+    </div>
+    <div class="tab-btn" id="btn-admin" onclick="switchTab('admin')">
+      <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
+      <span class="tab-btn-label">后台</span>
     </div>
   </div>
 
@@ -1282,26 +2087,18 @@ function doLogin() {
       document.getElementById('loginLoadingText').textContent = '正在进入系统…';
       setTimeout(function() {
         loading.classList.remove('show');
-        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('registerScreen').style.display = 'none';
       }, 600);
     }, 700);
   }, 1000);
 }
 
-/* ===== 取消常用 ===== */
-function removeQuickApp(btn) {
-  if (!confirm('确定要从常用应用中移除吗？')) return;
-  var quickApp = btn.closest('.quick-app');
-  quickApp.style.transition = 'transform 0.2s, opacity 0.2s';
-  quickApp.style.transform = 'scale(0.7)';
-  quickApp.style.opacity = '0';
-  setTimeout(function() { quickApp.remove(); }, 200);
-}
-
 /* ===== 登出：回到登录页 ===== */
 document.querySelectorAll('.logout-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
-    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('loginScreen').style.display = '';
+    document.getElementById('registerScreen').style.display = 'none';
     switchTab('workbench');
   });
 });
@@ -1328,107 +2125,318 @@ function toggleSub(el) {
   if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
 }
 
+/* ===== 通讯录层级下钻 ===== */
+var contactsBreadcrumb = [];
+var mockMembersByDept = {
+  '集团总部': [
+    {name:'李明', title:'行政管理部 | 部门经理', id:'HQ00001', phone:'138****1001', email:'liming@company.com', dept:'集团总部', sub:'行政管理部'},
+    {name:'王芳', title:'财务部 | 财务主管', id:'HQ00002', phone:'139****2002', email:'wangfang@company.com', dept:'集团总部', sub:'财务部'},
+    {name:'陈磊', title:'人力资源部 | HR专员', id:'HQ00003', phone:'137****3003', email:'chenlei@company.com', dept:'集团总部', sub:'人力资源部'},
+    {name:'赵雪', title:'行政管理部 | 行政专员', id:'HQ00004', phone:'136****4004', email:'zhaoxue@company.com', dept:'集团总部', sub:'行政管理部'},
+    {name:'孙浩', title:'财务部 | 会计', id:'HQ00005', phone:'135****5005', email:'sunhao@company.com', dept:'集团总部', sub:'财务部'},
+  ],
+  '技术研发中心': [
+    {name:'张三', title:'技术研发中心 | 高级工程师', id:'RD00123', phone:'138****8888', email:'zhangsan@company.com', dept:'技术研发中心', sub:'研发一部'},
+    {name:'刘阳', title:'技术研发中心 | 架构师', id:'RD00124', phone:'139****9999', email:'liuyang@company.com', dept:'技术研发中心', sub:'研发一部'},
+    {name:'周晓', title:'技术研发中心 | 测试工程师', id:'RD00125', phone:'137****7777', email:'zhouxiao@company.com', dept:'技术研发中心', sub:'研发二部'},
+    {name:'吴佳', title:'技术研发中心 | 前端工程师', id:'RD00126', phone:'136****6666', email:'wujia@company.com', dept:'技术研发中心', sub:'研发二部'},
+    {name:'黄磊', title:'技术研发中心 | 数据工程师', id:'RD00127', phone:'135****5555', email:'huanglei@company.com', dept:'技术研发中心', sub:'数据中台'},
+  ],
+  '供应链管理部': [
+    {name:'肖波', title:'供应链管理部 | 部门总监', id:'SC00001', phone:'138****1111', email:'xiaobo@company.com', dept:'供应链管理部', sub:'采购组'},
+    {name:'韩雨', title:'供应链管理部 | 采购主管', id:'SC00002', phone:'139****2222', email:'hanyu@company.com', dept:'供应链管理部', sub:'采购组'},
+    {name:'许静', title:'供应链管理部 | 物流专员', id:'SC00003', phone:'137****3333', email:'xujing@company.com', dept:'供应链管理部', sub:'物流组'},
+  ],
+};
+var avatarColors = ['#D42B2B','#1976d2','#388e3c','#f57c00','#7b1fa2','#00838f','#c62828'];
+function getAvatarColor(name) {
+  var idx = (name.charCodeAt(0) || 0) % avatarColors.length;
+  return avatarColors[idx];
+}
+function navToRoot() {
+  contactsBreadcrumb = [];
+  document.getElementById('org-dept-panel').style.display = '';
+  document.getElementById('org-member-panel').style.display = 'none';
+  renderBreadcrumb();
+}
+function enterDept(deptName, subCount, total) {
+  contactsBreadcrumb.push(deptName);
+  renderBreadcrumb();
+  document.getElementById('org-dept-panel').style.display = 'none';
+  var panel = document.getElementById('org-member-panel');
+  panel.style.display = '';
+  var members = mockMembersByDept[deptName] || generateMockMembers(deptName, Math.min(total, 5));
+  var subGroups = {};
+  members.forEach(function(m) {
+    if (!subGroups[m.sub]) subGroups[m.sub] = [];
+    subGroups[m.sub].push(m);
+  });
+  var html = '';
+  Object.keys(subGroups).forEach(function(sub) {
+    html += '<div class="org-member-dept-header"><svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:#ccc;"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>' + sub + '</div>';
+    subGroups[sub].forEach(function(m) {
+      html += '<div class="org-member-item" onclick="showContactCard(\'' + m.name + '\',\'' + m.title + '\',\'' + m.id + '\',\'' + m.phone + '\',\'' + m.email + '\',\'' + m.dept + '\')">';
+      html += '<div class="org-member-avatar" style="background:' + getAvatarColor(m.name) + ';">' + m.name[0] + '</div>';
+      html += '<div class="org-member-info"><div class="org-member-name">' + m.name + '</div><div class="org-member-title">' + m.title.split('|')[1].trim() + '</div></div>';
+      html += '<svg class="org-member-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>';
+    });
+  });
+  document.getElementById('org-member-list').innerHTML = html;
+}
+function generateMockMembers(deptName, count) {
+  var names = ['王明','李娜','张伟','刘洋','陈静','杨光','赵强'];
+  var result = [];
+  for (var i = 0; i < count; i++) {
+    var n = names[i % names.length];
+    result.push({name:n, title:deptName + ' | 员工', id:'EMP0' + (1000+i), phone:'138****' + (1000+i), email:n.toLowerCase() + '@company.com', dept:deptName, sub:deptName});
+  }
+  return result;
+}
+function renderBreadcrumb() {
+  var bar = document.getElementById('org-breadcrumb');
+  var html = '<span class="org-bc-item" onclick="navToRoot()">某企业集团</span>';
+  contactsBreadcrumb.forEach(function(name, idx) {
+    html += '<span class="org-bc-sep">›</span>';
+    if (idx === contactsBreadcrumb.length - 1) {
+      html += '<span class="org-bc-item" style="color:#D42B2B;font-weight:600;">' + name + '</span>';
+    } else {
+      html += '<span class="org-bc-item" onclick="navToRoot()">' + name + '</span>';
+    }
+  });
+  bar.innerHTML = html;
+}
+function showContactCard(name, title, id, phone, email, dept) {
+  document.getElementById('cardAvatar').textContent = name[0];
+  document.getElementById('cardAvatar').style.background = 'linear-gradient(135deg,' + getAvatarColor(name) + ',' + getAvatarColor(name) + 'cc)';
+  document.getElementById('cardName').textContent = name;
+  document.getElementById('cardTitle').textContent = title;
+  document.getElementById('cardId').textContent = id;
+  document.getElementById('cardPhone').textContent = phone;
+  document.getElementById('cardEmail').textContent = email;
+  document.getElementById('cardDept').textContent = dept;
+  document.getElementById('contactCardOverlay').classList.add('show');
+}
+function closeContactCard() {
+  document.getElementById('contactCardOverlay').classList.remove('show');
+}
+
+/* ===== 消息搜索 ===== */
+function filterMsgList(kw) {
+  var items = document.querySelectorAll('#msgListContainer .msg-item');
+  kw = kw.toLowerCase();
+  items.forEach(function(item) {
+    var text = (item.dataset.text || '') + item.textContent;
+    item.style.display = text.toLowerCase().includes(kw) ? '' : 'none';
+  });
+}
+
+/* ===== 注册功能 ===== */
+function showRegisterPanel() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('registerScreen').style.display = 'flex';
+}
+function backToLogin() {
+  document.getElementById('registerScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = '';
+}
+var smsCountdown = null;
+function sendSmsCode() {
+  var btn = document.querySelector('.reg-sms-btn');
+  if (btn.classList.contains('counting')) return;
+  var phone = document.getElementById('regPhone').value.trim();
+  if (!phone || phone.length < 11) { alert('请先填写正确的手机号'); return; }
+  btn.classList.add('counting');
+  var count = 60;
+  btn.textContent = count + 's后重发';
+  smsCountdown = setInterval(function() {
+    count--;
+    if (count <= 0) {
+      clearInterval(smsCountdown);
+      btn.classList.remove('counting');
+      btn.textContent = '获取验证码';
+    } else {
+      btn.textContent = count + 's后重发';
+    }
+  }, 1000);
+}
+function doRegister() {
+  var user = document.getElementById('regUser').value.trim();
+  var name = document.getElementById('regName').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var code = document.getElementById('regCode').value.trim();
+  var pwd = document.getElementById('regPwd').value;
+  if (!user || !name || !phone || !code || !pwd) { alert('请填写所有必填项'); return; }
+  if (pwd.length < 6) { alert('密码长度不少于6位'); return; }
+  alert('注册申请已提交，请等待管理员审核（1-2个工作日）');
+  backToLogin();
+}
+
 /* Enter键登录 */
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !document.getElementById('loginScreen').classList.contains('hidden')) {
+  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none' && document.getElementById('registerScreen').style.display === 'none') {
     doLogin();
   }
 });
 
-/* ===== 维护记录弹窗 ===== */
-var versionList = [
-  {ver:'v2.1.3', date:'2026-04-22', type:'正式版'},
-  {ver:'v2.1.2', date:'2026-04-10', type:'正式版'},
-  {ver:'v2.2.0', date:'2026-04-28', type:'内测版'},
-];
-var editingVersionIdx = -1;
+/* ===== 应用选择弹窗 ===== */
+function showAppPicker() {
+  document.getElementById('appPicker').classList.add('show');
+  document.getElementById('appSearchInput').value = '';
+  filterAppPicker('');
+}
+function closeAppPicker() {
+  document.getElementById('appPicker').classList.remove('show');
+}
+function filterAppPicker(query) {
+  var items = document.querySelectorAll('.app-picker-item');
+  items.forEach(function(item) {
+    var label = item.querySelector('.app-picker-item-label').textContent.toLowerCase();
+    item.style.display = label.includes(query.toLowerCase()) ? '' : 'none';
+  });
+}
+function addAppToQuick(el, appName, colorClass) {
+  el.classList.add('added');
+  el.onclick = null;
+  closeAppPicker();
+  // 找到quick-apps里最后一个（添加按钮），在它前面插入新应用
+  var quickApps = document.querySelector('.quick-apps');
+  var addBtn = quickApps.querySelector('.quick-app:last-child');
+  var colorMap = {red:'#D42B2B', blue:'#1976d2', green:'#388e3c', orange:'#ff7043'};
+  var iconMap = {
+    '云小链': '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>',
+    'OA系统': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>',
+    'BI系统': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>',
+    '实验室检测': '<path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/>'
+  };
+  var newApp = document.createElement('div');
+  newApp.className = 'quick-app';
+  newApp.innerHTML = '<div class="quick-app-icon ' + colorClass + '"><svg viewBox="0 0 24 24" fill="white">' + (iconMap[appName] || '') + '</svg></div><span class="quick-app-label">' + appName + '</span>';
+  quickApps.insertBefore(newApp, addBtn);
+}
 
+/* ===== 待办列表页 ===== */
+var currentTodoTab = 'pending';
+var mockTodoData = {
+  pending: [
+    {title: '【待审批】采购申请单 P0-20260422-001', source: 'OA系统', tagClass: 'tag-oa', time: '今天 14:30'},
+    {title: '【待确认】会议室预订申请 - 4月25日A301', source: 'OA系统', tagClass: 'tag-oa', time: '昨天 17:20'},
+    {title: '【待审批】差旅费报销单 RE-20260421-005', source: 'OA系统', tagClass: 'tag-oa', time: '昨天 10:00'},
+    {title: '【待处理】样品 SN20260422-003 检测完成', source: '实验室检测', tagClass: 'tag-lab', time: '今天 11:00'},
+    {title: '【待处理】紧急检测申请 LAB-20260421-012', source: '实验室检测', tagClass: 'tag-lab', time: '昨天 15:30'},
+    {title: '【待阅】4月销售数据报表已生成', source: 'BI系统', tagClass: 'tag-bi', time: '今天 09:30'},
+    {title: '【待处理】系统安全补丁更新通知', source: '系统通知', tagClass: 'tag-sys', time: '昨天 16:00'},
+    {title: '【待确认】库存预警：原材料A-003低于安全线', source: '云小链', tagClass: 'tag-chain', time: '今天 08:40'},
+  ],
+  done: [
+    {title: '【已处理】出差申请单 TR-20260420-001', source: 'OA系统', tagClass: 'tag-oa', time: '04-20 15:00'},
+    {title: '【已审批】采购申请 PO-20260419-008', source: 'OA系统', tagClass: 'tag-oa', time: '04-19 11:00'},
+    {title: '【已查收】样品 SN20260418-007 报告', source: '实验室检测', tagClass: 'tag-lab', time: '04-20 10:00'},
+    {title: '【已阅】3月财务报表已生成', source: 'BI系统', tagClass: 'tag-bi', time: '04-19 14:00'},
+  ]
+};
+var currentTodoKeyword = '';
+function showTodoPage() {
+  document.getElementById('tab-todopage').style.display = 'flex';
+  document.getElementById('tab-workbench').classList.remove('active');
+  document.getElementById('todoSearchInput').value = '';
+  currentTodoKeyword = '';
+  renderTodoList('pending');
+}
+function closeTodoPage() {
+  document.getElementById('tab-todopage').style.display = 'none';
+  document.getElementById('tab-workbench').classList.add('active');
+}
+function switchTodoTab(tab) {
+  currentTodoTab = tab;
+  document.getElementById('tab-todo-pending').classList.toggle('active', tab === 'pending');
+  document.getElementById('tab-todo-done').classList.toggle('active', tab === 'done');
+  renderTodoList(tab);
+}
+function filterTodoList(kw) {
+  currentTodoKeyword = kw.toLowerCase();
+  renderTodoList(currentTodoTab);
+}
+function renderTodoList(tab) {
+  var container = document.getElementById('todo-list-container');
+  var items = mockTodoData[tab] || [];
+  if (currentTodoKeyword) {
+    items = items.filter(function(i){ return i.title.toLowerCase().includes(currentTodoKeyword) || i.source.toLowerCase().includes(currentTodoKeyword); });
+  }
+  if (!items.length) {
+    container.innerHTML = '<div class="todo-empty">暂无相关待办</div>';
+    return;
+  }
+  // 按系统分组
+  var groups = {};
+  var groupOrder = [];
+  items.forEach(function(item) {
+    if (!groups[item.source]) { groups[item.source] = []; groupOrder.push(item.source); }
+    groups[item.source].push(item);
+  });
+  var dotColors = {'OA系统':'#1976d2','实验室检测':'#ff7043','BI系统':'#388e3c','系统通知':'#888','云小链':'#D42B2B'};
+  var html = '';
+  groupOrder.forEach(function(src) {
+    var list = groups[src];
+    var dot = dotColors[src] || '#999';
+    html += '<div class="todo-group-card">';
+    html += '<div class="todo-group-header"><div class="todo-group-dot" style="background:' + dot + ';"></div><div class="todo-group-title">' + src + '</div><div class="todo-group-count">' + list.length + '</div></div>';
+    list.forEach(function(item) {
+      html += '<div class="todo-item-v2"><div class="todo-item-v2-body"><div class="todo-item-v2-title">' + item.title + '</div><div class="todo-item-v2-meta">' + item.time + '</div></div><svg class="todo-item-v2-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>';
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+/* ===== 版本更新记录 ===== */
+function showVersionHistory() {
+  document.getElementById('versionPopup').classList.add('show');
+}
+function closeVersionHistory() {
+  document.getElementById('versionPopup').classList.remove('show');
+}
+function showProfileDetail() { alert('个人信息页面（来自主数据平台，只读）'); }
+function showVPNDetail() { alert('VPN连接详情'); }
+
+/* ===== 后台版本记录表单 ===== */
 function showAddVersion() {
-  editingVersionIdx = -1;
-  document.getElementById('versionFormTitle').textContent = '新增版本记录';
-  document.getElementById('vfVer').value = '';
-  document.getElementById('vfDate').value = '';
-  document.getElementById('vfType').value = '正式版';
-  document.getElementById('vfDesc').value = '';
   document.getElementById('versionFormPopup').classList.add('show');
+  document.getElementById('versionFormTitle').textContent = '新增版本记录';
+  document.getElementById('formVerNum').value = '';
+  document.getElementById('formVerType').selectedIndex = 0;
+  document.getElementById('formVerDate').value = '';
+  document.getElementById('formVerDesc').value = '';
 }
 function editVersion(idx) {
-  editingVersionIdx = idx;
-  var v = versionList[idx];
-  document.getElementById('versionFormTitle').textContent = '编辑版本记录';
-  document.getElementById('vfVer').value = v.ver;
-  document.getElementById('vfDate').value = v.date;
-  document.getElementById('vfType').value = v.type;
-  document.getElementById('vfDesc').value = '';
   document.getElementById('versionFormPopup').classList.add('show');
+  document.getElementById('versionFormTitle').textContent = '编辑版本记录';
+  var rows = [
+    {ver: 'v2.1.3', type: '正式版', date: '2026-04-22', desc: '1. 新增统一登录界面\n2. 优化待办事项入口\n3. 修复若干已知问题'},
+    {ver: 'v2.1.2', type: '正式版', date: '2026-04-10', desc: '1. 新增BI系统快捷入口\n2. 优化通讯录搜索性能'},
+    {ver: 'v2.2.0', type: '内测版', date: '2026-04-28', desc: '1. 新增应用选择弹窗\n2. 待办列表页'}
+  ];
+  var r = rows[idx] || rows[0];
+  document.getElementById('formVerNum').value = r.ver;
+  document.getElementById('formVerType').value = r.type;
+  document.getElementById('formVerDate').value = r.date;
+  document.getElementById('formVerDesc').value = r.desc;
 }
 function closeVersionForm() {
   document.getElementById('versionFormPopup').classList.remove('show');
 }
 function saveVersion() {
-  var ver = document.getElementById('vfVer').value.trim();
-  var date = document.getElementById('vfDate').value.trim();
-  var type = document.getElementById('vfType').value;
-  if (!ver || !date) { alert('版本号和更新日期不能为空'); return; }
-  var rec = {ver: ver, date: date, type: type};
-  if (editingVersionIdx >= 0) {
-    versionList[editingVersionIdx] = rec;
-  } else {
-    versionList.unshift(rec);
-  }
-  alert('版本记录已保存');
+  var ver = document.getElementById('formVerNum').value.trim();
+  if (!ver) { alert('请填写版本号'); return; }
   closeVersionForm();
+  alert('版本记录已保存');
 }
-function deleteVersion(idx) {
-  if (!confirm('确定删除该版本记录？')) return;
-  versionList.splice(idx, 1);
-  alert('已删除');
-}
-</script>
 
-<!-- ===== 维护记录弹窗 ===== -->
-<style>
-.version-form-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; }
-.version-form-popup.show { display: flex; }
-.version-form-card { background: white; border-radius: 16px; width: 90%; max-width: 360px; padding: 20px; }
-.version-form-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #222; }
-.vf-row { margin-bottom: 12px; }
-.vf-label { font-size: 12px; color: #666; margin-bottom: 4px; }
-.vf-input, .vf-select, .vf-textarea { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
-.vf-textarea { height: 80px; resize: none; }
-.vf-btns { display: flex; gap: 10px; margin-top: 16px; }
-.vf-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 14px; cursor: pointer; }
-.vf-btn-cancel { background: #f5f5f5; color: #333; }
-.vf-btn-save { background: #1976d2; color: white; }
-</style>
-<div class="version-form-popup" id="versionFormPopup">
-  <div class="version-form-card">
-    <div class="version-form-title" id="versionFormTitle">新增版本记录</div>
-    <div class="vf-row">
-      <div class="vf-label">版本号</div>
-      <input class="vf-input" id="vfVer" placeholder="如 v2.2.1">
-    </div>
-    <div class="vf-row">
-      <div class="vf-label">更新日期</div>
-      <input class="vf-input" id="vfDate" type="date">
-    </div>
-    <div class="vf-row">
-      <div class="vf-label">类型</div>
-      <select class="vf-select" id="vfType">
-        <option>正式版</option>
-        <option>内测版</option>
-        <option>热修复</option>
-      </select>
-    </div>
-    <div class="vf-row">
-      <div class="vf-label">更新说明</div>
-      <textarea class="vf-textarea" id="vfDesc" placeholder="简要描述本次更新内容…"></textarea>
-    </div>
-    <div class="vf-btns">
-      <button class="vf-btn vf-btn-cancel" onclick="closeVersionForm()">取消</button>
-      <button class="vf-btn vf-btn-save" onclick="saveVersion()">保存</button>
-    </div>
-  </div>
-</div>
+/* 点击弹窗背景关闭 */
+document.querySelectorAll('.app-picker-overlay, .version-popup, .admin-popup-overlay').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    if (e.target === el) el.classList.remove('show');
+  });
+});
+</script>
 </body>
 </html>
