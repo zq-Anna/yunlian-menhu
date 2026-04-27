@@ -1416,6 +1416,28 @@
             <input id="regContactPhone" type="tel" placeholder="请输入对接人电话" />
           </div>
         </div>
+        <div class="login-field">
+          <div class="login-field-label">短信验证码</div>
+          <div class="login-field-input" onclick="focusField(this)" style="padding-right: 0;">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="regCode" type="text" placeholder="请输入验证码" style="flex:1;" />
+            <div class="reg-sms-btn" id="regSmsBtn" onclick="sendSmsCode()">获取验证码</div>
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">设置密码</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="regPwd" type="password" placeholder="请设置6-16位密码" />
+          </div>
+        </div>
+        <div class="login-field">
+          <div class="login-field-label">确认密码</div>
+          <div class="login-field-input" onclick="focusField(this)">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input id="regPwd2" type="password" placeholder="请再次输入密码" />
+          </div>
+        </div>
         <div class="login-btn" onclick="doRegister()">注 册</div>
         <div class="login-register-link">已有账号？<span onclick="backToLogin()">返回登录</span></div>
       </div>
@@ -2243,7 +2265,7 @@ function backToLogin() {
 }
 var smsCountdown = null;
 function sendSmsCode() {
-  var btn = document.querySelector('.reg-sms-btn');
+  var btn = document.getElementById('regSmsBtn');
   if (!btn) return;
   if (btn.classList.contains('counting')) return;
   var phone = document.getElementById('regPhone').value.trim();
@@ -2269,7 +2291,12 @@ function doRegister() {
   var email = document.getElementById('regEmail').value.trim();
   var contact = document.getElementById('regContact').value.trim();
   var contactPhone = document.getElementById('regContactPhone').value.trim();
-  if (!company || !name || !phone || !email || !contact || !contactPhone) { alert('请填写所有必填项'); return; }
+  var code = document.getElementById('regCode').value.trim();
+  var pwd = document.getElementById('regPwd').value;
+  var pwd2 = document.getElementById('regPwd2').value;
+  if (!company || !name || !phone || !email || !contact || !contactPhone || !code || !pwd || !pwd2) { alert('请填写所有必填项'); return; }
+  if (pwd.length < 6) { alert('密码长度不少于6位'); return; }
+  if (pwd !== pwd2) { alert('两次输入的密码不一致'); return; }
   alert('注册申请已提交，请等待管理员审核（1-2个工作日）');
   backToLogin();
 }
