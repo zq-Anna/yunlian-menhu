@@ -82,6 +82,84 @@
   .todo-stat-num { font-size: 20px; font-weight: 700; }
   .todo-stat-label { font-size: 10px; opacity: 0.85; margin-top: 2px; }
 
+  /* ===== 我的待办区域（新样式） ===== */
+  .my-todo-area {
+    margin: 10px 16px 0;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .my-todo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .my-todo-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+  }
+  .my-todo-title svg { width: 15px; height: 15px; fill: #D42B2B; }
+  .my-todo-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #D42B2B;
+  }
+  .my-todo-meta svg { width: 12px; height: 12px; fill: #D42B2B; }
+  .my-todo-count {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .my-todo-list { padding: 0 14px 4px; }
+  .my-todo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+  }
+  .my-todo-item:last-child { border-bottom: none; }
+  .my-todo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .my-todo-icon svg { width: 16px; height: 16px; }
+  .my-todo-icon.red { background: #FFF0F0; }
+  .my-todo-icon.red svg { fill: #D42B2B; }
+  .my-todo-icon.orange { background: #FFF3EE; }
+  .my-todo-icon.orange svg { fill: #ff7043; }
+  .my-todo-icon.blue { background: #EFF6FF; }
+  .my-todo-icon.blue svg { fill: #1976d2; }
+  .my-todo-body { flex: 1; min-width: 0; }
+  .my-todo-text {
+    font-size: 12px;
+    color: #333;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .my-todo-sub {
+    font-size: 10px;
+    color: #999;
+    margin-top: 3px;
+  }
+
   .section-header {
     display: flex;
     justify-content: space-between;
@@ -109,6 +187,7 @@
     gap: 4px;
     cursor: pointer;
     padding: 4px 0;
+    position: relative;
   }
   .quick-app-icon {
     width: 42px;
@@ -131,6 +210,49 @@
   .quick-app-icon.add-btn { background: #f5f5f5; border: 2px dashed #ddd; }
   .quick-app-icon.add-btn svg { fill: #bbb; width: 18px; height: 18px; }
   .quick-app-label { font-size: 10px; color: #555; text-align: center; line-height: 1.2; }
+  /* 待办角标 */
+  .quick-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    min-width: 16px;
+    height: 16px;
+    background: #D42B2B;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    border: 1.5px solid white;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* 应用列表搜索框 */
+  .apps-search-bar {
+    margin: 0 16px 10px;
+    background: white;
+    border-radius: 10px;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .apps-search-bar svg { width: 16px; height: 16px; fill: #bbb; flex-shrink: 0; }
+  .apps-search-bar input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #333;
+    background: transparent;
+    width: 100%;
+  }
+  .apps-search-bar input::placeholder { color: #bbb; }
 
   /* 应用列表 - 单列卡片，垂直滚动 */
   .apps-grid {
@@ -756,6 +878,33 @@
     flex-shrink: 0;
   }
   .reg-sms-btn.counting { background: #ccc; }
+
+  /* ===== 消息分类Tab ===== */
+  .msg-tabs {
+    display: flex;
+    margin: 10px 16px 0;
+    background: white;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .msg-tab {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    padding: 7px 4px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .msg-tab.active {
+    background: #D42B2B;
+    color: white;
+    font-weight: 600;
+  }
 
   /* ===== 消息搜索框 ===== */
   .msg-search-bar {
@@ -1473,20 +1622,38 @@
         </div>
       </div>
 
-      <!-- 待办 + 消息 入口卡片 -->
-      <div class="todo-card">
-        <div class="todo-card-title">
-          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-          快速入口
-        </div>
-        <div class="todo-stats">
-          <div class="todo-stat" onclick="showTodoPage()" style="cursor:pointer;">
-            <div class="todo-stat-num">12</div>
-            <div class="todo-stat-label">待办</div>
+      <!-- 我的待办区域 -->
+      <div class="my-todo-area">
+        <div class="my-todo-header">
+          <div class="my-todo-title">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+            我的待办
           </div>
-          <div class="todo-stat" onclick="switchTab('message')" style="cursor:pointer;">
-            <div class="todo-stat-num">8</div>
-            <div class="todo-stat-label">消息</div>
+          <div class="my-todo-meta" onclick="showTodoPage()" style="cursor:pointer;">
+            <span class="my-todo-count">12</span> 项待处理 <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+          </div>
+        </div>
+        <div class="my-todo-list">
+          <div class="my-todo-item" onclick="showTodoPage()">
+            <div class="my-todo-icon red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+            <div class="my-todo-body">
+              <div class="my-todo-text">【采购申请】编号PO-2026-0427-01 待审批</div>
+              <div class="my-todo-sub">OA系统 · 今天 14:30</div>
+            </div>
+          </div>
+          <div class="my-todo-item" onclick="showTodoPage()">
+            <div class="my-todo-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+            <div class="my-todo-body">
+              <div class="my-todo-text">【样品送检】SN20260425-003 等待实验室接收</div>
+              <div class="my-todo-sub">实验室检测 · 今天 11:20</div>
+            </div>
+          </div>
+          <div class="my-todo-item" onclick="showTodoPage()">
+            <div class="my-todo-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+            <div class="my-todo-body">
+              <div class="my-todo-text">【库存预警】原材料A-003库存低于安全线，请及时补货</div>
+              <div class="my-todo-sub">云小链 · 今天 08:40</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1498,19 +1665,31 @@
       </div>
       <div class="quick-apps">
         <div class="quick-app">
-          <div class="quick-app-icon red"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+          <div class="quick-app-icon red">
+            <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+            <span class="quick-badge">3</span>
+          </div>
           <span class="quick-app-label">云小链</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <div class="quick-app-icon blue">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span class="quick-badge">5</span>
+          </div>
           <span class="quick-app-label">OA系统</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <div class="quick-app-icon green">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            <span class="quick-badge">2</span>
+          </div>
           <span class="quick-app-label">BI系统</span>
         </div>
         <div class="quick-app">
-          <div class="quick-app-icon orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
+          <div class="quick-app-icon orange">
+            <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg>
+            <span class="quick-badge">2</span>
+          </div>
           <span class="quick-app-label">实验室检测</span>
         </div>
         <div class="quick-app" onclick="showAppPicker()">
@@ -1523,11 +1702,15 @@
       <div class="section-header" style="padding-top:14px;">
         <span class="section-title">应用列表</span>
       </div>
+      <div class="apps-search-bar">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" placeholder="搜索应用名称..." id="appsSearchInput" oninput="filterAppsGrid(this.value)" />
+      </div>
 
-      <div class="apps-grid">
+      <div class="apps-grid" id="appsGrid">
 
         <!-- 云小链 -->
-        <div class="system-card">
+        <div class="system-card" data-name="云小链">
           <div class="system-card-header">
             <div class="system-icon">
               <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
@@ -1549,7 +1732,7 @@
         </div>
 
         <!-- OA系统 -->
-        <div class="system-card">
+        <div class="system-card" data-name="OA系统">
           <div class="system-card-header">
             <div class="system-icon blue">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -1579,7 +1762,7 @@
         </div>
 
         <!-- BI系统 -->
-        <div class="system-card">
+        <div class="system-card" data-name="BI系统">
           <div class="system-card-header">
             <div class="system-icon green">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
@@ -1605,7 +1788,7 @@
         </div>
 
         <!-- 实验室检测 -->
-        <div class="system-card">
+        <div class="system-card" data-name="实验室检测">
           <div class="system-card-header">
             <div class="system-icon orange">
               <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg>
@@ -1646,6 +1829,13 @@
           <div class="page-header-icon"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
         </div>
       </div>
+      <!-- 消息分类Tab -->
+      <div class="msg-tabs">
+        <div class="msg-tab active" id="msg-tab-all" onclick="switchMsgTab('all')">全部</div>
+        <div class="msg-tab" id="msg-tab-notify" onclick="switchMsgTab('notify')">系统通知</div>
+        <div class="msg-tab" id="msg-tab-todo" onclick="switchMsgTab('todo')">业务待阅</div>
+        <div class="msg-tab" id="msg-tab-integrate" onclick="switchMsgTab('integrate')">集成消息</div>
+      </div>
       <!-- 消息搜索框 -->
       <div class="msg-search-bar">
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -1653,41 +1843,41 @@
       </div>
       <div class="msg-list" id="msgListContainer">
         <div class="msg-section-title">今天</div>
-        <div class="msg-item" data-text="OA系统 待办提醒 采购申请 审批待办">
+        <div class="msg-item" data-category="todo" data-text="OA系统 待办提醒 采购申请 审批待办">
           <div class="msg-avatar red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">OA系统</span><div class="msg-meta"><span class="msg-time">14:30</span><span class="msg-unread">3</span></div></div><div class="msg-text">【待办提醒】您有一条"采购申请"审批待办，请及时处理</div></div>
         </div>
-        <div class="msg-item" data-text="实验室检测系统 检测完成 样品编号 报告">
+        <div class="msg-item" data-category="integrate" data-text="实验室检测系统 检测完成 样品编号 报告">
           <div class="msg-avatar orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">实验室检测系统</span><div class="msg-meta"><span class="msg-time">11:20</span><span class="msg-unread">2</span></div></div><div class="msg-text">【检测完成】样品编号SN20260415-001检测报告已生成</div></div>
         </div>
-        <div class="msg-item" data-text="系统通知 例行维护 22:00">
+        <div class="msg-item" data-category="notify" data-text="系统通知 例行维护 22:00">
           <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">系统通知</span><div class="msg-meta"><span class="msg-time">09:05</span><span class="msg-unread">1</span></div></div><div class="msg-text">系统将于今晚22:00-24:00进行例行维护，请提前做好准备</div></div>
         </div>
-        <div class="msg-item" data-text="BI系统 销售数据 报表已生成">
+        <div class="msg-item" data-category="integrate" data-text="云小链 库存预警 原材料A-003 安全线">
           <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">云小链</span><div class="msg-meta"><span class="msg-time">08:40</span></div></div><div class="msg-text">【库存预警】原材料A-003库存低于安全线，请及时补货</div></div>
         </div>
         <div class="msg-section-title">昨天</div>
-        <div class="msg-item" data-text="BI系统 销售数据 报表已生成">
+        <div class="msg-item" data-category="integrate" data-text="BI系统 销售数据 报表已生成">
           <div class="msg-avatar green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">BI系统</span><span class="msg-time">16:45</span></div><div class="msg-text">上月销售数据报表已生成，可在BI系统查看详情</div></div>
         </div>
-        <div class="msg-item" data-text="OA系统 会议室 审批通过">
+        <div class="msg-item" data-category="todo" data-text="OA系统 会议室 审批通过">
           <div class="msg-avatar red"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">OA系统</span><span class="msg-time">14:10</span></div><div class="msg-text">【审批通过】会议室预订申请已批准，4月25日 A301</div></div>
         </div>
-        <div class="msg-item" data-text="云小链 单点登录 绑定完成">
+        <div class="msg-item" data-category="integrate" data-text="云小链 单点登录 绑定完成">
           <div class="msg-avatar purple"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">云小链</span><span class="msg-time">10:15</span></div><div class="msg-text">您的账号已完成云小链单点登录绑定，可正常使用</div></div>
         </div>
         <div class="msg-section-title">更早</div>
-        <div class="msg-item" data-text="实验室检测 报告已归档 样品">
+        <div class="msg-item" data-category="integrate" data-text="实验室检测 报告已归档 样品">
           <div class="msg-avatar orange"><svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">实验室检测系统</span><span class="msg-time">04-21</span></div><div class="msg-text">样品SN20260418-007检测报告已归档，可下载查看</div></div>
         </div>
-        <div class="msg-item" data-text="系统通知 权限变更 角色更新">
+        <div class="msg-item" data-category="notify" data-text="系统通知 权限变更 角色更新">
           <div class="msg-avatar blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
           <div class="msg-content"><div class="msg-top"><span class="msg-sender">系统通知</span><span class="msg-time">04-20</span></div><div class="msg-text">您的账号权限已更新，新增"报表查看"角色，请登录确认</div></div>
         </div>
@@ -2244,13 +2434,39 @@ function closeContactCard() {
   document.getElementById('contactCardOverlay').classList.remove('show');
 }
 
-/* ===== 消息搜索 ===== */
+/* ===== 应用列表搜索 ===== */
+function filterAppsGrid(kw) {
+  var cards = document.querySelectorAll('#appsGrid .system-card');
+  kw = kw.toLowerCase();
+  cards.forEach(function(card) {
+    var name = (card.dataset.name || '') + card.textContent;
+    card.style.display = name.toLowerCase().includes(kw) ? '' : 'none';
+  });
+}
+
+/* ===== 消息Tab切换 + 搜索 ===== */
+var activeMsgTab = 'all';
+function switchMsgTab(tab) {
+  activeMsgTab = tab;
+  document.querySelectorAll('.msg-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('msg-tab-' + tab).classList.add('active');
+  filterMsgList(document.getElementById('msgSearchInput').value);
+}
 function filterMsgList(kw) {
   var items = document.querySelectorAll('#msgListContainer .msg-item');
   kw = kw.toLowerCase();
   items.forEach(function(item) {
+    var catMatch = activeMsgTab === 'all' || item.dataset.category === activeMsgTab;
     var text = (item.dataset.text || '') + item.textContent;
-    item.style.display = text.toLowerCase().includes(kw) ? '' : 'none';
+    var searchMatch = !kw || text.toLowerCase().includes(kw);
+    item.style.display = (catMatch && searchMatch) ? '' : 'none';
+  });
+  // 隐藏空白分组标题
+  document.querySelectorAll('#msgListContainer .msg-section-title').forEach(function(sec) {
+    var next = sec.nextElementSibling;
+    var hasVisible = false;
+    while (next) { if (next.style.display !== 'none') { hasVisible = true; break; } next = next.nextElementSibling; }
+    sec.style.display = hasVisible ? '' : 'none';
   });
 }
 
