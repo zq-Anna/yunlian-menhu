@@ -11,13 +11,13 @@
 
   .phone-frame {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     max-width: 480px;
     margin: 0 auto;
     background: #f5f5f5;
     border-radius: 0;
     box-shadow: none;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -354,21 +354,19 @@
     background: rgba(0,0,0,0.5);
     display: none;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
     z-index: 2000;
-    padding: 20px;
   }
   .shortcut-picker-overlay.show { display: flex; }
   .shortcut-picker-sheet {
-    background: #fff;
-    border-radius: 16px;
-    max-height: 80vh;
+    background: white;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 0 30px;
+    max-height: 70vh;
+    overflow-y: auto;
+    animation: slideUp .25s ease;
     width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    animation: slideUp 0.3s ease;
   }
   .shortcut-picker-subtitle {
     text-align: center;
@@ -1913,11 +1911,12 @@
       </div>
 
       <!-- 快捷功能 -->
-      <div class="section-header" style="margin-top:8px;">
+      <div class="section-header" style="margin: 10px 16px 0;">
         <span class="section-title">快捷功能</span>
         <span class="section-more" onclick="showShortcutPicker()">配置 <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
       </div>
-      <div class="quick-shortcuts" id="quickShortcuts">
+      <div class="quick-shortcuts-wrap" style="margin: 0 16px 16px; background: #fff; border-radius: 14px; overflow: hidden;">
+        <div class="quick-shortcuts" id="quickShortcuts">
         <div class="quick-shortcut-item" data-id="qa" data-app="云小链">
           <div class="quick-shortcut-icon red">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
@@ -1966,6 +1965,7 @@
           </div>
           <span class="quick-shortcut-label">添加</span>
         </div>
+      </div>
       </div>
 
       <!-- 应用列表 -->
