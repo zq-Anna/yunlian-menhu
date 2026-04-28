@@ -301,6 +301,215 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .quick-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px 8px;
+    padding: 12px 16px;
+    background: #fff;
+  }
+  .quick-shortcut-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .quick-shortcut-item:active {
+    transform: scale(0.95);
+  }
+  .quick-shortcut-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .quick-shortcut-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+  }
+  .quick-shortcut-icon.red { background: linear-gradient(135deg, #D42B2B, #e85555); }
+  .quick-shortcut-icon.blue { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+  .quick-shortcut-icon.green { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+  .quick-shortcut-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
+  .quick-shortcut-label {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 快捷功能配置弹窗 */
+  .shortcut-picker-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    z-index: 2000;
+  }
+  .shortcut-picker-overlay.show { display: flex; }
+  .shortcut-picker-sheet {
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease;
+  }
+  .shortcut-picker-subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: -8px;
+    margin-bottom: 12px;
+  }
+  .shortcut-selected-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 8px;
+    min-height: 40px;
+    align-items: center;
+  }
+  .shortcut-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #333;
+  }
+  .shortcut-preview-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shortcut-preview-icon svg {
+    width: 10px;
+    height: 10px;
+    fill: #fff;
+  }
+  .shortcut-preview-icon.red { background: linear-gradient(135deg, #D42B2B, #e85555); }
+  .shortcut-preview-icon.blue { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+  .shortcut-preview-icon.green { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+  .shortcut-preview-icon.orange { background: linear-gradient(135deg, #ff7043, #ff9066); }
+  .shortcut-count {
+    text-align: center;
+    font-size: 12px;
+    color: #D42B2B;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .shortcut-source-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+  }
+  .shortcut-source-group {
+    margin-bottom: 16px;
+  }
+  .shortcut-source-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .shortcut-source-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .shortcut-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .shortcut-checkbox-item:active {
+    background: #f5f5f5;
+  }
+  .shortcut-checkbox-item input {
+    display: none;
+  }
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .check-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: #fff;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+  }
+  .shortcut-checkbox-item input:checked + .check-icon {
+    background: #D42B2B;
+    border-color: #D42B2B;
+  }
+  .shortcut-checkbox-item input:checked + .check-icon svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .shortcut-checkbox-label {
+    font-size: 14px;
+    color: #333;
+    flex: 1;
+  }
+  .shortcut-picker-actions {
+    display: flex;
+    gap: 12px;
+    padding: 12px 16px 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+  .shortcut-picker-btn {
+    flex: 1;
+    height: 44px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .shortcut-picker-btn.cancel {
+    background: #f5f5f5;
+    color: #666;
+  }
+  .shortcut-picker-btn.confirm {
+    background: linear-gradient(135deg, #D42B2B, #e85555);
+    color: #fff;
+  }
+  .shortcut-picker-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
   /* 快捷功能入口 */
   .system-shortcuts {
     display: flex;
@@ -1698,6 +1907,56 @@
         </div>
       </div>
 
+      <!-- 快捷功能 -->
+      <div class="section-header" style="margin-top:8px;">
+        <span class="section-title">快捷功能</span>
+        <span class="section-more" onclick="showShortcutPicker()">配置 <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
+      </div>
+      <div class="quick-shortcuts" id="quickShortcuts">
+        <div class="quick-shortcut-item" data-id="qa" data-app="云小链">
+          <div class="quick-shortcut-icon red">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">快速问答</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="meeting" data-app="OA系统">
+          <div class="quick-shortcut-icon blue">
+            <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">会议室预订</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="travel" data-app="OA系统">
+          <div class="quick-shortcut-icon blue">
+            <svg viewBox="0 0 24 24"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">出差申请</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="report" data-app="BI系统">
+          <div class="quick-shortcut-icon green">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">数据报表</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="lab-apply" data-app="实验室检测">
+          <div class="quick-shortcut-icon orange">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">检测申请</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="lab-result" data-app="实验室检测">
+          <div class="quick-shortcut-icon orange">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">结果查询</span>
+        </div>
+        <div class="quick-shortcut-item" data-id="car" data-app="OA系统">
+          <div class="quick-shortcut-icon blue">
+            <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+          </div>
+          <span class="quick-shortcut-label">用车申请</span>
+        </div>
+      </div>
+
       <!-- 应用列表 -->
       <div class="section-header" style="padding-top:14px;">
         <span class="section-title">应用列表</span>
@@ -2244,6 +2503,102 @@
     </div>
   </div>
 
+  <!-- ===== 快捷功能配置弹窗 ===== -->
+  <div class="shortcut-picker-overlay" id="shortcutPicker">
+    <div class="shortcut-picker-sheet">
+      <div class="app-picker-handle"></div>
+      <div class="app-picker-title">配置快捷功能</div>
+      <div class="shortcut-picker-subtitle">最多可选择7个快捷功能</div>
+      
+      <!-- 已选快捷功能预览 -->
+      <div class="shortcut-selected-preview" id="shortcutPreview">
+        <div class="shortcut-preview-item" data-id="qa"><div class="shortcut-preview-icon red"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div><span>快速问答</span></div>
+        <div class="shortcut-preview-item" data-id="meeting"><div class="shortcut-preview-icon blue"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg></div><span>会议室预订</span></div>
+        <div class="shortcut-preview-item" data-id="travel"><div class="shortcut-preview-icon blue"><svg viewBox="0 0 24 24"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg></div><span>出差申请</span></div>
+        <div class="shortcut-preview-item" data-id="report"><div class="shortcut-preview-icon green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div><span>数据报表</span></div>
+        <div class="shortcut-preview-item" data-id="lab-apply"><div class="shortcut-preview-icon orange"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div><span>检测申请</span></div>
+        <div class="shortcut-preview-item" data-id="lab-result"><div class="shortcut-preview-icon orange"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div><span>结果查询</span></div>
+        <div class="shortcut-preview-item" data-id="car"><div class="shortcut-preview-icon blue"><svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg></div><span>用车申请</span></div>
+      </div>
+      <div class="shortcut-count" id="shortcutCount">已选 7/7</div>
+      
+      <!-- 快捷功能列表 -->
+      <div class="shortcut-source-list">
+        <div class="shortcut-source-group">
+          <div class="shortcut-source-title">云小链</div>
+          <div class="shortcut-source-items">
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="qa" data-app="云小链" data-label="快速问答" data-color="red" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">快速问答</span>
+            </label>
+          </div>
+        </div>
+        <div class="shortcut-source-group">
+          <div class="shortcut-source-title">OA系统</div>
+          <div class="shortcut-source-items">
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="meeting" data-app="OA系统" data-label="会议室预订" data-color="blue" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">会议室预订</span>
+            </label>
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="travel" data-app="OA系统" data-label="出差申请" data-color="blue" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">出差申请</span>
+            </label>
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="car" data-app="OA系统" data-label="用车申请" data-color="blue" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">用车申请</span>
+            </label>
+          </div>
+        </div>
+        <div class="shortcut-source-group">
+          <div class="shortcut-source-title">BI系统</div>
+          <div class="shortcut-source-items">
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="report" data-app="BI系统" data-label="数据报表" data-color="green" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">数据报表</span>
+            </label>
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="analysis" data-app="BI系统" data-label="指标分析" data-color="green" onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">指标分析</span>
+            </label>
+          </div>
+        </div>
+        <div class="shortcut-source-group">
+          <div class="shortcut-source-title">实验室检测</div>
+          <div class="shortcut-source-items">
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="lab-apply" data-app="实验室检测" data-label="检测申请" data-color="orange" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">检测申请</span>
+            </label>
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="lab-result" data-app="实验室检测" data-label="结果查询" data-color="orange" checked onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">结果查询</span>
+            </label>
+            <label class="shortcut-checkbox-item">
+              <input type="checkbox" value="lab-todo" data-app="实验室检测" data-label="待办处理" data-color="orange" onchange="toggleShortcut(this)">
+              <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              <span class="shortcut-checkbox-label">待办处理</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="shortcut-picker-actions">
+        <div class="shortcut-picker-btn cancel" onclick="closeShortcutPicker()">取消</div>
+        <div class="shortcut-picker-btn confirm" onclick="saveShortcutConfig()">保存</div>
+      </div>
+    </div>
+    <div style="flex:1;" onclick="closeShortcutPicker()"></div>
+  </div>
+
   <div class="tab-bar">
     <div class="tab-btn active" id="btn-workbench" onclick="switchTab('workbench')">
       <div class="tab-btn-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div>
@@ -2677,8 +3032,81 @@ function saveVersion() {
   alert('版本记录已保存');
 }
 
+/* ===== 快捷功能配置 ===== */
+var maxShortcuts = 7;
+var selectedShortcuts = ['qa','meeting','travel','report','lab-apply','lab-result','car'];
+var shortcutIcons = {
+  'qa': '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>',
+  'meeting': '<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>',
+  'travel': '<path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>',
+  'car': '<path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>',
+  'report': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>',
+  'analysis': '<path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>',
+  'lab-apply': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>',
+  'lab-result': '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>',
+  'lab-todo': '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>'
+};
+
+function showShortcutPicker() {
+  document.getElementById('shortcutPicker').classList.add('show');
+  updateShortcutPreview();
+}
+function closeShortcutPicker() {
+  document.getElementById('shortcutPicker').classList.remove('show');
+}
+function toggleShortcut(checkbox) {
+  var id = checkbox.value;
+  if (checkbox.checked) {
+    if (selectedShortcuts.length >= maxShortcuts) {
+      checkbox.checked = false;
+      alert('最多只能选择' + maxShortcuts + '个快捷功能');
+      return;
+    }
+    if (!selectedShortcuts.includes(id)) {
+      selectedShortcuts.push(id);
+    }
+  } else {
+    selectedShortcuts = selectedShortcuts.filter(function(s) { return s !== id; });
+  }
+  updateShortcutPreview();
+}
+function updateShortcutPreview() {
+  var preview = document.getElementById('shortcutPreview');
+  var countEl = document.getElementById('shortcutCount');
+  var html = '';
+  selectedShortcuts.forEach(function(id) {
+    var checkbox = document.querySelector('input[value="' + id + '"]');
+    if (checkbox) {
+      var label = checkbox.dataset.label;
+      var color = checkbox.dataset.color;
+      var icon = shortcutIcons[id] || '';
+      html += '<div class="shortcut-preview-item" data-id="' + id + '"><div class="shortcut-preview-icon ' + color + '"><svg viewBox="0 0 24 24">' + icon + '</svg></div><span>' + label + '</span></div>';
+    }
+  });
+  preview.innerHTML = html;
+  countEl.textContent = '已选 ' + selectedShortcuts.length + '/' + maxShortcuts;
+  countEl.style.color = selectedShortcuts.length >= maxShortcuts ? '#D42B2B' : '#666';
+}
+function saveShortcutConfig() {
+  // 更新工作台快捷功能显示
+  var container = document.getElementById('quickShortcuts');
+  var html = '';
+  selectedShortcuts.forEach(function(id) {
+    var checkbox = document.querySelector('input[value="' + id + '"]');
+    if (checkbox) {
+      var label = checkbox.dataset.label;
+      var color = checkbox.dataset.color;
+      var app = checkbox.dataset.app;
+      var icon = shortcutIcons[id] || '';
+      html += '<div class="quick-shortcut-item" data-id="' + id + '" data-app="' + app + '"><div class="quick-shortcut-icon ' + color + '"><svg viewBox="0 0 24 24">' + icon + '</svg></div><span class="quick-shortcut-label">' + label + '</span></div>';
+    }
+  });
+  container.innerHTML = html;
+  closeShortcutPicker();
+}
+
 /* 点击弹窗背景关闭 */
-document.querySelectorAll('.app-picker-overlay, .version-popup, .admin-popup-overlay').forEach(function(el) {
+document.querySelectorAll('.app-picker-overlay, .version-popup, .admin-popup-overlay, .shortcut-picker-overlay').forEach(function(el) {
   el.addEventListener('click', function(e) {
     if (e.target === el) el.classList.remove('show');
   });
